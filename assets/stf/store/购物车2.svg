@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="29.482" viewBox="0 0 30 29.482">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fe441f" stop-opacity="0.659"/>
+      <stop offset="1" stop-color="#fe441f"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fe441f"/>
+      <stop offset="1" stop-color="#fe441f" stop-opacity="0.675"/>
+    </linearGradient>
+  </defs>
+  <g id="购物车2" transform="translate(-115.118 -129.946)">
+    <path id="路径_5640" data-name="路径 5640" d="M144.416,410.147a3.546,3.546,0,0,0-2.891-1.469H118.711a3.552,3.552,0,0,0-2.895,1.473,3.589,3.589,0,0,0-.53,3.215L118.9,424.91a3.577,3.577,0,0,0,3.423,2.523h15.625a3.574,3.574,0,0,0,3.427-2.535l3.576-11.541A3.57,3.57,0,0,0,144.416,410.147Z" transform="translate(0 -268.005)" fill="url(#linear-gradient)"/>
+    <path id="路径_5641" data-name="路径 5641" d="M302.861,139.3a.994.994,0,0,1-.99-1,6.3,6.3,0,1,0-12.609,0,.99.99,0,1,1-1.979,0,8.285,8.285,0,1,1,16.569,0A1,1,0,0,1,302.861,139.3Z" transform="translate(-165.454)" fill="url(#linear-gradient-2)"/>
+    <path id="路径_5642" data-name="路径 5642" d="M284.055,510.052m-1.738,0a1.738,1.738,0,1,0,1.738-1.738A1.739,1.739,0,0,0,282.317,510.052Z" transform="translate(-160.715 -363.696)" fill="#fff"/>
+    <path id="路径_5643" data-name="路径 5643" d="M636.465,510.052m-1.738,0a1.738,1.738,0,1,0,1.738-1.738A1.738,1.738,0,0,0,634.726,510.052Z" transform="translate(-499.459 -363.696)" fill="#fff"/>
+  </g>
+</svg>

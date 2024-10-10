@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="44" height="44" viewBox="0 0 44 44">
+  <defs>
+    <linearGradient id="linear-gradient" y1="0.5" x2="1" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fc795a"/>
+      <stop offset="1" stop-color="#fb6b47"/>
+    </linearGradient>
+    <clipPath id="clip-path">
+      <circle id="椭圆_5" data-name="椭圆 5" cx="22" cy="22" r="22" fill="url(#linear-gradient)"/>
+    </clipPath>
+    <linearGradient id="linear-gradient-3" y1="0.5" x2="1" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fc795a"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0.169"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-4" y1="0.5" x2="1" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fc7858"/>
+      <stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+    <clipPath id="clip-path-2">
+      <rect id="矩形_1104" data-name="矩形 1104" width="27" height="27" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="旅行规划" transform="translate(-101.5 -129.162)">
+    <g id="组_1344" data-name="组 1344" transform="translate(101.5 129.162)">
+      <circle id="椭圆_2" data-name="椭圆 2" cx="22" cy="22" r="22" transform="translate(0 0)" fill="url(#linear-gradient)"/>
+      <g id="组_1343" data-name="组 1343" transform="translate(0 0)" clip-path="url(#clip-path)">
+        <circle id="椭圆_3" data-name="椭圆 3" cx="6.356" cy="6.356" r="6.356" transform="translate(27.378 10.756)" opacity="0.55" fill="url(#linear-gradient-3)"/>
+        <ellipse id="椭圆_4" data-name="椭圆 4" cx="15.156" cy="15.644" rx="15.156" ry="15.644" transform="translate(-3.911 13.689)" opacity="0.3" fill="url(#linear-gradient-4)"/>
+      </g>
+    </g>
+    <g id="组_1347" data-name="组 1347" transform="translate(110 137.662)">
+      <g id="组_1346" data-name="组 1346" transform="translate(0 0)">
+        <g id="组_1345" data-name="组 1345" clip-path="url(#clip-path-2)">
+          <path id="路径_5437" data-name="路径 5437" d="M148.2,169.384l-5.291-5.282a.832.832,0,0,0-1.173,0l-5.291,5.282a.829.829,0,0,0,0,1.171l5.291,5.324a.833.833,0,0,0,1.173,0L148.2,170.6a.829.829,0,0,0,0-1.212Zm-8.236,0-.59.59A.829.829,0,0,1,138.2,168.8l.591-.59a.832.832,0,0,1,1.181,1.171Zm3.528,1.171-1.764,1.76a.829.829,0,0,1-1.173-1.171l1.764-1.76a.831.831,0,1,1,1.173,1.171Zm-15.291-9.392,5.291-5.282a.83.83,0,0,0,0-1.171l-5.291-5.3a.833.833,0,0,0-1.173,0l-5.291,5.29a.831.831,0,0,0,0,1.171l5.291,5.282a.833.833,0,0,0,1.173.008Zm.591-1.76a.829.829,0,1,1,0-1.171.832.832,0,0,1,0,1.171Zm-3.527-2.35a.829.829,0,0,1,0-1.171l1.764-1.76a.829.829,0,1,1,1.173,1.171l-1.763,1.76a.833.833,0,0,1-1.173,0Zm18.825,1.171a.833.833,0,0,0,1.173,0l1.747-1.744a.831.831,0,0,0,.017-1.188l-4.708-4.7a.833.833,0,0,0-1.2,0l-1.747,1.744a.829.829,0,0,0,0,1.171Zm-1.181,1.179-4.708-4.7a.833.833,0,0,0-1.173,0l-14.359,14.334a.83.83,0,0,0-.241.664l.416,4.285a.832.832,0,0,0,.749.747l4.293.415a.831.831,0,0,0,.666-.241l14.358-14.333a.829.829,0,0,0,0-1.171Zm0,0" transform="translate(-121.5 -149.167)" fill="#fff"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

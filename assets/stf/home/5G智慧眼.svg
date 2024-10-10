@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="44" height="44" viewBox="0 0 44 44">
+  <defs>
+    <clipPath id="clip-path">
+      <circle id="椭圆_13" data-name="椭圆 13" cx="22" cy="22" r="22" transform="translate(0 0)" fill="#33adff"/>
+    </clipPath>
+    <linearGradient id="linear-gradient" y1="0.5" x2="1" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#33adff"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0.169"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" y1="0.5" x2="1" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#33adff"/>
+      <stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+    <clipPath id="clip-path-2">
+      <rect id="矩形_1106" data-name="矩形 1106" width="21.56" height="26.4" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="_5G智慧眼" data-name="5G智慧眼" transform="translate(-355.674 -129)">
+    <g id="组_1355" data-name="组 1355" transform="translate(355.674 129)">
+      <circle id="椭圆_10" data-name="椭圆 10" cx="22" cy="22" r="22" transform="translate(0 0)" fill="#33adff"/>
+      <g id="组_1354" data-name="组 1354" transform="translate(0 0)" clip-path="url(#clip-path)">
+        <circle id="椭圆_11" data-name="椭圆 11" cx="6.5" cy="6.5" r="6.5" transform="translate(27 11)" opacity="0.55" fill="url(#linear-gradient)"/>
+        <circle id="椭圆_12" data-name="椭圆 12" cx="15.5" cy="15.5" r="15.5" transform="translate(-4 14)" opacity="0.3" fill="url(#linear-gradient-2)"/>
+      </g>
+    </g>
+    <g id="组_1358" data-name="组 1358" transform="translate(366.894 137.8)">
+      <g id="组_1357" data-name="组 1357" transform="translate(0)">
+        <g id="组_1356" data-name="组 1356" clip-path="url(#clip-path-2)">
+          <path id="路径_5439" data-name="路径 5439" d="M402.7,159.592a10.77,10.77,0,0,0-21.535,0,10.469,10.469,0,0,0,4.906,8.839l-2.233,4.373a1.777,1.777,0,0,0,.071,1.744,1.8,1.8,0,0,0,1.533.852h12.983a1.8,1.8,0,0,0,1.532-.852,1.777,1.777,0,0,0,.071-1.743l-2.232-4.373a10.469,10.469,0,0,0,4.9-8.839Zm-10.769-5.27a5.271,5.271,0,1,1-5.385,5.27,5.328,5.328,0,0,1,5.385-5.27Zm0,0" transform="translate(-381.169 -149.03)" fill="#fff"/>
+        </g>
+      </g>
+      <path id="路径_5440" data-name="路径 5440" d="M400.307,171.516a2.73,2.73,0,0,0,2.6.682,2.661,2.661,0,0,0,1.9-1.863,2.6,2.6,0,0,0-.7-2.544,2.732,2.732,0,0,0-3.806,0,2.594,2.594,0,0,0,0,3.725Zm0,0" transform="translate(-391.447 -159.091)" fill="#fff"/>
+    </g>
+  </g>
+</svg>
