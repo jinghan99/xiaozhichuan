@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../tools/storage_tool.dart';
+import '../route.dart';
 import 'loading_state.dart';
 
 class LoadingLogic extends GetxController {
@@ -16,6 +17,7 @@ class LoadingLogic extends GetxController {
     super.onReady();
     readBox();
     MyDio().initDio();
+    Get.offAllNamed(root);
   }
 
   @override

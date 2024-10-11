@@ -46,6 +46,7 @@ dependencies:
   helpers: ^1.2.3
   get_storage: ^2.1.1
   flutter_easyloading: ^3.0.5
+  flutter_svg: ^2.0.10+1
 
 dev_dependencies:
   flutter_test:
