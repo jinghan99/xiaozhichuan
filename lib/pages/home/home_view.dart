@@ -60,14 +60,30 @@ class HomePage extends StatelessWidget {
                     )
                   ],
                 ),
-                children: appList.map((app) {
-                  final appName = app["name"];
-                  final appRoute = app["route"];
-                  return ListTile(
-                    title: Text(appName, style: b14),
-                    onTap: () => Get.toNamed(appRoute),
-                  );
-                }).toList(),
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(left:19,right: 5, bottom: 15,top: 10),
+                    child: Wrap(
+                      spacing: 10, // 子元素之间的水平间距
+                      runSpacing: 20, // 子元素之间的垂直间距
+                      children: appList.map<Widget>((app) {
+                        final appName = app["name"];
+                        final appRoute = app["route"];
+                        return GestureDetector(
+                          onTap: () => Get.toNamed(appRoute), // 点击事件处理
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                            decoration: BoxDecoration(
+                              color: cF5, // 背景颜色
+                              borderRadius: BorderRadius.circular(8), // 圆角
+                            ),
+                            child: Text(appName, style: b14, textAlign: TextAlign.center), // 应用名称,
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  )
+                ],
               ),
             );
           },
