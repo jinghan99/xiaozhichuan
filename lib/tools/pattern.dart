@@ -22,6 +22,7 @@ TextStyle bl12 = TextStyle(color: c2A9CEE, fontSize: 12.sp);
 TextStyle bl14 = TextStyle(color: c2A9CEE, fontSize: 14.sp);
 TextStyle bl14b = TextStyle(color: c2A9CEE, fontSize: 14.sp, fontWeight: FontWeight.bold);
 
+TextStyle w8 = TextStyle(color: Colors.white, fontSize: 8.sp);
 TextStyle w10 = TextStyle(color: Colors.white, fontSize: 10.sp);
 TextStyle w12 = TextStyle(color: Colors.white, fontSize: 12.sp);
 TextStyle w14 = TextStyle(color: Colors.white, fontSize: 14.sp);
