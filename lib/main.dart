@@ -31,8 +31,8 @@ Widget _buildApp() {
     headerBuilder: () => const MaterialClassicHeader(
       color: c141630, // 刷新头部的颜色
     ),
-    footerBuilder: () => _buildCustomFooter(), // 使用分离的方法构建自定义底部
-    child: GetMaterialApp(
+    footerBuilder: () => _buildCustomFooter(), // 自定义底部
+    child: GetMaterialApp(//GetX自带的MaterialApp，配置路由表，管理路由入栈、出栈等操作
       debugShowCheckedModeBanner: false, // 关闭调试模式的横幅
       initialRoute: '/', // 初始路由
       title: '脚手架', // 应用标题

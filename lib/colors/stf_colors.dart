@@ -20,6 +20,8 @@ Color cF2A464 =const Color(0xffF2A464);
 Color cFDD6AE =const Color(0xffFDD6AE);
 Color cFCEDDB =const Color(0xffFCEDDB);
 Color cF9D9B7 =const Color(0xffF9D9B7);
+Color cEAF5EF =const Color(0xffEAF5EF);
+Color c7BBD9C =const Color(0Xff7BBD9C);
 
 
 List<Color> o2o = [cF29C13, cF27113];
