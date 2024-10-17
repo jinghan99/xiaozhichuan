@@ -36,7 +36,7 @@ class CategoryPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("一个小纸船",style: grb16,).paddingOnly(bottom: 5),
+            Text("一个小纸船",style: gr16b,).paddingOnly(bottom: 5),
             Text("兰溪三日桃花雨，半夜鲤鱼来上滩。",style: b12,),
           ],
         ),

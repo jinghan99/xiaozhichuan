@@ -1,3 +1,4 @@
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_scaffold/tools/extensions_exp.dart';
 
 import 'handheld_barrage_logic.dart';
@@ -11,11 +12,178 @@ class HandheldBarragePage extends StatelessWidget {
     final HandheldBarrageLogic logic = Get.put(HandheldBarrageLogic());
     final HandheldBarrageState state = Get.find<HandheldBarrageLogic>().state;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: buildAppBar(),
-      body: const Center(
-        child: Text('handheldBarrage'),
+      body: Column(
+        children: [
+          Expanded(
+            child: Column(
+              children: [
+                TextField(
+                    decoration: InputDecoration(
+                        labelText: "请输入弹幕内容",
+                        labelStyle: gr16,
+                        hintStyle: TextStyle(color: cB9B9B9),
+                        floatingLabelBehavior: FloatingLabelBehavior.auto,
+                        // 不显示默认的边框
+                        border: InputBorder.none,
+                        // 当文本字段未获得焦点时的样式
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        // 当文本字段获得焦点时的样式
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.green),
+                        ))).marginSymmetric(horizontal: 30, vertical: 20),
+                wordSize(state),
+                scrollSpeed(state),
+                colorSelected(context, state),
+              ],
+            ),
+          ),
+          Container(
+              margin: EdgeInsets.only(bottom: 30),
+              padding: EdgeInsets.all(10),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: cEAF5EF,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              height: 50,
+              width: 0.8.sw,
+              child: Text("显示弹幕", style: gr16b))
+        ],
       ),
     );
+  }
+
+  Widget wordSize(HandheldBarrageState state) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(
+          Icons.format_size,
+          size: 20,
+          color: c7BBD9C,
+        ).marginOnly(
+          right: 10,
+        ),
+        Text(
+          "字体大小",
+          style: b16,
+        ).marginOnly(
+          right: 10,
+        ),
+        Obx(() {
+          return Expanded(
+            child: Slider(
+              value: state.wordSize.value,
+              onChanged: (value) {
+                state.wordSize.value = value;
+              },
+              min: 10,
+              max: 30,
+              activeColor: c7BBD9C,
+              inactiveColor: CDEEFE7, // 背景颜色
+            ),
+          );
+        }),
+      ],
+    ).marginSymmetric(horizontal: 30, vertical: 20);
+  }
+
+  Widget scrollSpeed(HandheldBarrageState state) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(
+          Icons.format_color_text,
+          size: 20,
+          color: c7BBD9C,
+        ).marginOnly(
+          right: 10,
+        ),
+        Text(
+          "滚动速度",
+          style: b16,
+        ).marginOnly(
+          right: 10,
+        ),
+        Obx(() {
+          return Expanded(
+            child: Slider(
+              value: state.scrollSpeed.value,
+              onChanged: (value) {
+                state.scrollSpeed.value = value;
+              },
+              min: 1,
+              max: 10,
+              activeColor: c7BBD9C,
+              inactiveColor: CDEEFE7, // 背景颜色
+            ),
+          );
+        }),
+      ],
+    ).marginSymmetric(horizontal: 30, vertical: 20);
+  }
+
+  // 颜色选择按钮
+  Widget colorSelected(BuildContext context, HandheldBarrageState state) {
+    return Obx(() {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            width: 0.36.sw,
+            height: 35.h,
+            decoration: BoxDecoration(
+              color: cF5,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.lens,
+                  size: 16,
+                  color: state.textColor.value,
+                ).marginOnly(right: 10),
+                Text(
+                  "文本颜色",
+                  style: b14,
+                ),
+              ],
+            ),
+          ).onTap(() {
+            _openColorPickerDialog(context, state.textColor);
+          }),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            width: 0.36.sw,
+            height: 35.h,
+            decoration: BoxDecoration(
+              color: cF5,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.lens,
+                  size: 16,
+                  color: state.backgroundColor.value,
+                ).marginOnly(right: 10),
+                Text(
+                  "背景色",
+                  style: b14,
+                ),
+              ],
+            ),
+          ).onTap(() {
+            _openColorPickerDialog(context, state.backgroundColor);
+          }),
+        ],
+      ).marginSymmetric(horizontal: 30, vertical: 20);
+    });
   }
 
   AppBar buildAppBar() {
@@ -39,11 +207,46 @@ class HandheldBarragePage extends StatelessWidget {
           children: [
             Text(
               "手持弹幕",
-              style: grb16,
+              style: gr16b,
             ).paddingOnly(bottom: 5),
           ],
         ),
       ),
+    );
+  }
+
+  // 颜色选择器
+  void _openColorPickerDialog(BuildContext context, Rx<Color> selectedColor) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            '选择颜色',
+            style: b16b,
+          ),
+          content: SingleChildScrollView(
+            child: ColorPicker(
+              pickerColor: selectedColor.value, // 当前颜色
+              onColorChanged: (Color color) {
+                selectedColor.value = color; // 更新选中的颜色
+              },
+              pickerAreaHeightPercent: 0.8, // 颜色选择器的高度占比
+            ),
+          ),
+          actions: [
+            ElevatedButton(
+              child: Text(
+                '确定',
+                style: gr16b,
+              ),
+              onPressed: () {
+                Get.back();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

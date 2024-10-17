@@ -35,7 +35,7 @@ class LinePage extends StatelessWidget {
           children: [
             Text(
               "一个小纸船",
-              style: grb16,
+              style: gr16b,
             ).paddingOnly(bottom: 5),
             Text(
               "兰溪三日桃花雨，半夜鲤鱼来上滩。",

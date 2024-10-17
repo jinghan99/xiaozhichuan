@@ -23,6 +23,12 @@ Color cF9D9B7 =const Color(0xffF9D9B7);
 Color cEAF5EF =const Color(0xffEAF5EF);
 Color c7BBD9C =const Color(0Xff7BBD9C);
 
+// 浅绿 背景色
+Color cE5F2EB =const Color(0xffe5f2eb);
+// 深一点绿 文字颜色
+Color cE3F2EB =const Color(0xffe3f2eb);
+
+Color CDEEFE7 =const Color(0xffdeefe7);
 
 List<Color> o2o = [cF29C13, cF27113];
 

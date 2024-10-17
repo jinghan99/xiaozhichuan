@@ -39,7 +39,8 @@ TextStyle g12 = TextStyle(color: Colors.grey, fontSize: 12.sp);
 TextStyle g14 = TextStyle(color: Colors.grey, fontSize: 14.sp);
 TextStyle g214 = TextStyle(color: cABB1BA, fontSize: 14.sp);
 TextStyle gr14 = TextStyle(color: c7BBD9C, fontSize: 14.sp);
-TextStyle grb16 = TextStyle(color: c7BBD9C, fontSize: 16.sp,fontWeight: FontWeight.bold);
+TextStyle gr16b = TextStyle(color: c7BBD9C, fontSize: 16.sp,fontWeight: FontWeight.bold);
+TextStyle gr16 = TextStyle(color: c7BBD9C, fontSize: 16.sp);
 TextStyle c9C16 = TextStyle(color: cABB1BA, fontSize: 16.sp);
 TextStyle c9C14 = TextStyle(color: cABB1BA, fontSize: 14.sp);
 
@@ -65,3 +66,4 @@ TextStyle r34b = TextStyle(color: Colors.red, fontSize: 34.sp, fontWeight: FontW
 TextStyle gr10 = TextStyle(color: c32D24C, fontSize: 10.sp);
 
 TextStyle bl10 = TextStyle(color: c2A9CEE, fontSize: 10.sp);
+
