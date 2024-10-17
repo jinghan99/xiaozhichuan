@@ -6,7 +6,7 @@ class AppCategories {
   // 静态资源 Map
   static final Map<String, List<Map<String, dynamic>>> categories = {
     '常用应用': [
-      {'name': '微信', 'route': '/wechat'},
+      {'name': '手持弹幕', 'route': '/handheldBarrage'},
       {'name': 'QQ', 'route': '/qq'},
       {'name': '支付宝', 'route': '/alipay'},
       {'name': '抖音', 'route': '/douyin'},
