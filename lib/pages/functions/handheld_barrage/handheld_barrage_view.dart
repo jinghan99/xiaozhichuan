@@ -17,28 +17,31 @@ class HandheldBarragePage extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: Column(
-              children: [
-                TextField(
-                    decoration: InputDecoration(
-                        labelText: "请输入弹幕内容",
-                        labelStyle: gr16,
-                        hintStyle: TextStyle(color: cB9B9B9),
-                        floatingLabelBehavior: FloatingLabelBehavior.auto,
-                        // 不显示默认的边框
-                        border: InputBorder.none,
-                        // 当文本字段未获得焦点时的样式
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                        // 当文本字段获得焦点时的样式
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.green),
-                        ))).marginSymmetric(horizontal: 30, vertical: 20),
-                wordSize(state),
-                scrollSpeed(state),
-                colorSelected(context, state),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  TextField(
+                      decoration: InputDecoration(
+                          labelText: "请输入弹幕内容",
+                          labelStyle: gr16,
+                          hintStyle: TextStyle(color: cB9B9B9),
+                          floatingLabelBehavior: FloatingLabelBehavior.auto,
+                          // 不显示默认的边框
+                          border: InputBorder.none,
+                          // 当文本字段未获得焦点时的样式
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                          // 当文本字段获得焦点时的样式
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.green),
+                          ))).marginSymmetric(horizontal: 30, vertical: 20),
+                  wordSize(state),
+                  scrollSpeed(state),
+                  colorSelected(context, state),
+                  screenDisplay(context, state),
+                ],
+              ),
             ),
           ),
           Container(
@@ -180,6 +183,81 @@ class HandheldBarragePage extends StatelessWidget {
             ),
           ).onTap(() {
             _openColorPickerDialog(context, state.backgroundColor);
+          }),
+        ],
+      ).marginSymmetric(horizontal: 30, vertical: 20);
+    });
+  }
+
+  Widget screenDisplay(BuildContext context, HandheldBarrageState state) {
+    return Obx(() {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            alignment: Alignment.bottomLeft,
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            width: 0.36.sw,
+            height: 35.h,
+            decoration: BoxDecoration(
+              color: cF5,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Row(
+              children: [
+                SizedBox(
+                  width:14.w,
+                  child: Radio<bool>(
+                    value: false,
+                    groupValue: state.isPortrait.value,
+                    activeColor: Colors.green, // 设置选中时的颜色为绿色
+                    onChanged: (value) {
+                      if (value != null) {
+                        state.isPortrait.value = value; // 选择竖屏
+                      }
+                    },
+                  ),
+                ).marginSymmetric(horizontal: 8),
+                Text(
+                  "横屏显示",
+                  style: b14,
+                ),
+              ],
+            ),
+          ).onTap(() {
+            state.isPortrait.value = false; // 选择竖屏
+          }),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            width: 0.36.sw,
+            height: 35.h,
+            decoration: BoxDecoration(
+              color: cF5,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Row(
+              children: [
+                SizedBox(
+                  width:14.w,
+                  child: Radio<bool>(
+                    value: true,
+                    groupValue: state.isPortrait.value,
+                    activeColor: Colors.green, // 设置选中时的颜色为绿色
+                    onChanged: (value) {
+                      if (value != null) {
+                        state.isPortrait.value = value; // 选择竖屏
+                      }
+                    },
+                  ),
+                ).marginSymmetric(horizontal: 8),
+                Text(
+                  "竖屏显示",
+                  style: b14,
+                ),
+              ],
+            ),
+          ).onTap(() {
+            state.isPortrait.value = true; // 选择竖屏
           }),
         ],
       ).marginSymmetric(horizontal: 30, vertical: 20);
