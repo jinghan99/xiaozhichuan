@@ -21,6 +21,7 @@ class HandheldBarragePage extends StatelessWidget {
               child: Column(
                 children: [
                   TextField(
+                      controller: state.textController,
                       decoration: InputDecoration(
                           labelText: "请输入弹幕内容",
                           labelStyle: gr16,
@@ -45,16 +46,19 @@ class HandheldBarragePage extends StatelessWidget {
             ),
           ),
           Container(
-              margin: EdgeInsets.only(bottom: 30),
-              padding: EdgeInsets.all(10),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: cEAF5EF,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              height: 50,
-              width: 0.8.sw,
-              child: Text("显示弹幕", style: gr16b))
+                  margin: EdgeInsets.only(bottom: 30),
+                  padding: EdgeInsets.all(10),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: cEAF5EF,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  height: 50,
+                  width: 0.8.sw,
+                  child: Text("显示弹幕", style: gr16b))
+              .onTap(() {
+            logic.showBarrage();
+          })
         ],
       ),
     );
@@ -84,8 +88,8 @@ class HandheldBarragePage extends StatelessWidget {
               onChanged: (value) {
                 state.wordSize.value = value;
               },
-              min: 10,
-              max: 30,
+              min: 16,
+              max: 90,
               activeColor: c7BBD9C,
               inactiveColor: CDEEFE7, // 背景颜色
             ),
@@ -115,12 +119,12 @@ class HandheldBarragePage extends StatelessWidget {
         Obx(() {
           return Expanded(
             child: Slider(
-              value: state.scrollSpeed.value,
+              value: state.scrollSpeed.value.toDouble(),
               onChanged: (value) {
-                state.scrollSpeed.value = value;
+                state.scrollSpeed.value = value.toInt();
               },
               min: 1,
-              max: 10,
+              max: 8,
               activeColor: c7BBD9C,
               inactiveColor: CDEEFE7, // 背景颜色
             ),
@@ -206,7 +210,7 @@ class HandheldBarragePage extends StatelessWidget {
             child: Row(
               children: [
                 SizedBox(
-                  width:14.w,
+                  width: 14.w,
                   child: Radio<bool>(
                     value: false,
                     groupValue: state.isPortrait.value,
@@ -238,7 +242,7 @@ class HandheldBarragePage extends StatelessWidget {
             child: Row(
               children: [
                 SizedBox(
-                  width:14.w,
+                  width: 14.w,
                   child: Radio<bool>(
                     value: true,
                     groupValue: state.isPortrait.value,
