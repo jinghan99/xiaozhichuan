@@ -1,4 +1,3 @@
-import 'package:flutter_barrage/flutter_barrage.dart';
 import 'package:flutter_scaffold/tools/extensions_exp.dart';
 import 'show_barrage_logic.dart';
 import 'show_barrage_state.dart';
@@ -11,23 +10,28 @@ class ShowBarragePage extends StatelessWidget {
     final ShowBarrageLogic logic = Get.put(ShowBarrageLogic());
     final ShowBarrageState state = logic.state;
     return Scaffold(
-      body: Stack(
-        children: [
-          // 全屏的弹幕墙
-          BarrageWall(
-            speed: state.scrollSpeed,
-            controller: state.barrageWallController,
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            maxBulletHeight: 1,
-            child: Container(
-              color: state.backgroundColor,
-            )
+      body: Container(
+        color: state.backgroundColor, // 设置背景色为蓝灰色
+        width: double.infinity, // 设置宽度为全屏
+        height: double.infinity, // 设置高度为全屏
+        child: Center(
+          // 使用 Center 将滚动的内容居中显示
+          child: SingleChildScrollView(
+            controller: logic.scrollController,
+            scrollDirection: Axis.horizontal, // 设置滚动方向为水平
+            child: Row(
+              children: [
+                SizedBox(width: MediaQuery.of(context).size.width), // 文字从屏幕右侧进入
+                Text(
+                  state.text,
+                  style: TextStyle(fontSize: state.wordSize, color: state.textColor), // 设置文字大小和颜色
+                ),
+                SizedBox(width: MediaQuery.of(context).size.width), // 文字滚动到屏幕左侧后重新进入
+              ],
+            ),
           ),
-        ],
+        ),
       ),
     );
   }
-
-
 }

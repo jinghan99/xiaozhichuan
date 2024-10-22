@@ -124,7 +124,7 @@ class HandheldBarragePage extends StatelessWidget {
                 state.scrollSpeed.value = value.toInt();
               },
               min: 1,
-              max: 8,
+              max: 10,
               activeColor: c7BBD9C,
               inactiveColor: CDEEFE7, // 背景颜色
             ),

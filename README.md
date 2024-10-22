@@ -86,5 +86,7 @@ flutter pub add get_storage #  轻量级键值对本地存储解决方案
 flutter pub add flutter_easyloading
 flutter pub add  cupertino_icons
 flutter pub add  flutter_svg
+flutter pub add  flutter_barrage
+flutter pub add  flutter_colorpicker
 
 

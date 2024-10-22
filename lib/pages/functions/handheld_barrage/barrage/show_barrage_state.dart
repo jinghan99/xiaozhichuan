@@ -14,6 +14,10 @@ class ShowBarrageState {
   String text = ""; //弹幕文字
 
   final BarrageWallController barrageWallController = BarrageWallController();
+
+
+
+
   ShowBarrageState() {
     wordSize =  Get.arguments[0];
     scrollSpeed =  Get.arguments[1];
