@@ -7,7 +7,7 @@ class AppCategories {
   static final Map<String, List<Map<String, dynamic>>> categories = {
     '常用应用': [
       {'name': '手持弹幕', 'route': '/handheldBarrage'},
-      {'name': 'QQ', 'route': '/qq'},
+      {'name': '时间屏幕', 'route': '/timeScreen'},
       {'name': '支付宝', 'route': '/alipay'},
       {'name': '抖音', 'route': '/douyin'},
       {'name': '微博', 'route': '/weibo'},
