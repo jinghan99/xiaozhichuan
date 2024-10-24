@@ -88,8 +88,8 @@ class HandheldBarragePage extends StatelessWidget {
               onChanged: (value) {
                 state.wordSize.value = value;
               },
-              min: 16,
-              max: 90,
+              min: 20,
+              max: 180,
               activeColor: c7BBD9C,
               inactiveColor: CDEEFE7, // 背景颜色
             ),

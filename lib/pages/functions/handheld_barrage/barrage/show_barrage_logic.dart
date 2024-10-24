@@ -14,6 +14,8 @@ class ShowBarrageLogic extends GetxController
   void onInit() {
     super.onInit();
     scrollController = ScrollController();
+    // 设置为全屏模式，隐藏状态栏
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     init();
   }
 
@@ -54,6 +56,8 @@ class ShowBarrageLogic extends GetxController
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+    // 在 onClose 时恢复状态栏和导航栏
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     super.onClose();
   }
 }
