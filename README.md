@@ -88,6 +88,6 @@ flutter pub add  cupertino_icons
 flutter pub add  flutter_svg
 flutter pub add  flutter_barrage
 flutter pub add  flutter_colorpicker
-flutter pub add wakelock # 不息屏
+flutter pub add wakelock_plus # 不息屏
 
 

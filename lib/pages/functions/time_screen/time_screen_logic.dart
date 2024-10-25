@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 import 'time_screen_state.dart';
 
 class TimeScreenLogic extends GetxController with GetTickerProviderStateMixin {
@@ -23,7 +24,7 @@ class TimeScreenLogic extends GetxController with GetTickerProviderStateMixin {
     _initializeAnimations();
     _startSecondUpdater();
     // 启用屏幕常亮
-    // Wakelock.enable();
+    WakelockPlus.enable();
   }
 
   void initMode() {
@@ -147,7 +148,7 @@ class TimeScreenLogic extends GetxController with GetTickerProviderStateMixin {
   @override
   void onClose() {
     // 禁用屏幕常亮
-    // Wakelock.disable();
+    WakelockPlus.disable();
     _secondTimer?.cancel(); // 取消计时器
     secondAnimationController.dispose();
     minuteAnimationController.dispose();
