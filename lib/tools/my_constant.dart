@@ -7,8 +7,6 @@ class AppCategories {
       {'name': '手持弹幕', 'route': '/handheldBarrage'},
       {'name': '时间屏幕', 'route': '/timeScreen'},
       {'name': '五子棋', 'route': '/gobang'},
-      {'name': '抖音', 'route': '/douyin'},
-      {'name': '微博', 'route': '/weibo'},
     ],
     '查询应用': [
       {'name': '百度地图', 'route': '/baidumap'},
