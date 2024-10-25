@@ -63,7 +63,7 @@ class TimeScreenLogic extends GetxController with GetTickerProviderStateMixin {
   // 初始化动画
   void _initializeAnimations() {
     // 秒动画
-    secondAnimationController = AnimationController(duration: Duration(milliseconds: 400), vsync: this)
+    secondAnimationController = AnimationController(duration: _duration(), vsync: this)
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           secondAnimationController.reverse();
@@ -79,7 +79,7 @@ class TimeScreenLogic extends GetxController with GetTickerProviderStateMixin {
       });
 
     // 分钟动画
-    minuteAnimationController = AnimationController(duration: Duration(milliseconds: 400), vsync: this)
+    minuteAnimationController = AnimationController(duration: _duration(), vsync: this)
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           minuteAnimationController.reverse();
@@ -95,7 +95,7 @@ class TimeScreenLogic extends GetxController with GetTickerProviderStateMixin {
       });
 
     // 小时动画
-    hourAnimationController = AnimationController(duration: Duration(milliseconds: 400), vsync: this)
+    hourAnimationController = AnimationController(duration: _duration(), vsync: this)
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           hourAnimationController.reverse();
@@ -111,6 +111,8 @@ class TimeScreenLogic extends GetxController with GetTickerProviderStateMixin {
       });
   }
 
+  Duration _duration() => Duration(milliseconds: 300);
+
   // 每秒更新器，用于启动秒动画
   void _startSecondUpdater() {
     _secondTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -120,8 +122,6 @@ class TimeScreenLogic extends GetxController with GetTickerProviderStateMixin {
         if (state.currentHour.value == 23) {
           hourAnimationController.forward(); //启动小时动画
         }
-        //每分钟 校准当前时间
-        _calibrateTime();
       }
     });
   }
@@ -139,6 +139,8 @@ class TimeScreenLogic extends GetxController with GetTickerProviderStateMixin {
   void _updateMinute() {
     if (state.currentMinute.value == 59) {
       state.currentMinute.value = 0;
+      //每分钟 校准当前时间
+      _calibrateTime();
     } else {
       state.currentMinute.value += 1;
     }
