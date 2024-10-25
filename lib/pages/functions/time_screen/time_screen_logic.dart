@@ -22,13 +22,13 @@ class TimeScreenLogic extends GetxController with GetTickerProviderStateMixin {
     initMode();
     _initializeCurrentTime();
     _initializeAnimations();
-    _startSecondUpdater();
+
     // 启用屏幕常亮
     WakelockPlus.enable();
   }
 
   void initMode() {
-     // 设置为全屏模式，隐藏状态栏
+    // 设置为全屏模式，隐藏状态栏
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     // 横屏
     SystemChrome.setPreferredOrientations([
@@ -38,11 +38,26 @@ class TimeScreenLogic extends GetxController with GetTickerProviderStateMixin {
   }
 
   // 初始化当前时间
-  void _initializeCurrentTime() {
+  void _initializeCurrentTime() async {
     DateTime now = DateTime.now();
+    // 赋值
     state.currentSecond.value = now.second;
     state.currentMinute.value = now.minute;
     state.currentHour.value = now.hour;
+    while (true) {
+      now = DateTime.now();
+      if (now.millisecond == 0) {
+        // 赋值
+        state.currentSecond.value = now.second;
+        state.currentMinute.value = now.minute;
+        state.currentHour.value = now.hour;
+        // 启动定时器，每秒更新一次时间
+        _startSecondUpdater();
+        break; // 退出循环
+      }
+      // 暂停一段时间以减少 CPU 占用
+      await Future.delayed(Duration(milliseconds: 1));
+    }
   }
 
   // 初始化动画
@@ -105,6 +120,8 @@ class TimeScreenLogic extends GetxController with GetTickerProviderStateMixin {
         if (state.currentHour.value == 23) {
           hourAnimationController.forward(); //启动小时动画
         }
+        //每分钟 校准当前时间
+        _calibrateTime();
       }
     });
   }
@@ -133,6 +150,27 @@ class TimeScreenLogic extends GetxController with GetTickerProviderStateMixin {
       state.currentHour.value = 0;
     } else {
       state.currentHour.value += 1;
+    }
+  }
+
+  // 校准当前时间
+  void _calibrateTime() async{
+    DateTime now = DateTime.now();
+    // 赋值
+    state.currentSecond.value = now.second;
+    state.currentMinute.value = now.minute;
+    state.currentHour.value = now.hour;
+    while (true) {
+      now = DateTime.now();
+      if (now.millisecond == 0) {
+        // 赋值
+        state.currentSecond.value = now.second;
+        state.currentMinute.value = now.minute;
+        state.currentHour.value = now.hour;
+        break; // 退出循环
+      }
+      // 暂停一段时间以减少 CPU 占用
+      await Future.delayed(Duration(milliseconds: 1));
     }
   }
 
