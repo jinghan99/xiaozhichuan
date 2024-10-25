@@ -18,15 +18,20 @@ class TimeScreenLogic extends GetxController with GetTickerProviderStateMixin {
   void onInit() {
     super.onInit();
     // 设置为全屏模式，隐藏状态栏
+    initMode();
+    _initializeCurrentTime();
+    _initializeAnimations();
+    _startSecondUpdater();
+  }
+
+  void initMode() {
+     // 设置为全屏模式，隐藏状态栏
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     // 横屏
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
     ]);
-    _initializeCurrentTime();
-    _initializeAnimations();
-    _startSecondUpdater();
   }
 
   // 初始化当前时间
