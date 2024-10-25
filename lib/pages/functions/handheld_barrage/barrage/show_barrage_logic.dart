@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'show_barrage_state.dart';
 
@@ -12,6 +13,8 @@ class ShowBarrageLogic extends GetxController with GetSingleTickerProviderStateM
   @override
   void onInit() {
     super.onInit();
+    // 启用屏幕常亮
+    WakelockPlus.enable();
     scrollController = ScrollController();
     // 设置为全屏模式，隐藏状态栏
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
@@ -46,6 +49,8 @@ class ShowBarrageLogic extends GetxController with GetSingleTickerProviderStateM
 
   @override
   void onClose() {
+    // 禁用屏幕常亮
+    WakelockPlus.disable();
     animationController.dispose();
     scrollController.dispose();
     SystemChrome.setPreferredOrientations([

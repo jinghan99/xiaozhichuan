@@ -44,7 +44,7 @@
       return Text(
         ':',
         style: TextStyle(
-          color: Colors.white,
+          color: Colors.black,
           fontSize: 60.w,
           fontWeight: FontWeight.w700,
         ),
