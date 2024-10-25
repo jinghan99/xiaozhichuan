@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 
 class AppCategories {
   // 静态资源 Map
@@ -8,7 +6,7 @@ class AppCategories {
     '常用应用': [
       {'name': '手持弹幕', 'route': '/handheldBarrage'},
       {'name': '时间屏幕', 'route': '/timeScreen'},
-      {'name': '支付宝', 'route': '/alipay'},
+      {'name': '五子棋', 'route': '/gobang'},
       {'name': '抖音', 'route': '/douyin'},
       {'name': '微博', 'route': '/weibo'},
     ],

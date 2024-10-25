@@ -4,8 +4,7 @@ import 'package:get/get.dart';
 
 import 'show_barrage_state.dart';
 
-class ShowBarrageLogic extends GetxController
-    with GetSingleTickerProviderStateMixin {
+class ShowBarrageLogic extends GetxController with GetSingleTickerProviderStateMixin {
   final ShowBarrageState state = ShowBarrageState();
   late ScrollController scrollController;
   late AnimationController animationController;
@@ -27,12 +26,10 @@ class ShowBarrageLogic extends GetxController
     // 这里设置的持续时间为 (11 - speedFactor)，确保最小为 1 秒
     animationController = AnimationController(
       vsync: this,
-      duration:
-          Duration(seconds: (11 - speedFactor).clamp(1, 10)), // 确保持续时间至少为1秒
+      duration: Duration(seconds: (11 - speedFactor).clamp(1, 10)), // 确保持续时间至少为1秒 最大为10妙
     );
 
     // 无限循环播放动画
-    // animationController.repeat() - 让动画循环播放
     animationController.repeat();
 
     // 监听动画控制器的进度变化
@@ -41,10 +38,9 @@ class ShowBarrageLogic extends GetxController
       // animationController.value 会在 0 到 1 之间变化，表示动画进度
       // scrollController.position.maxScrollExtent - 获取可滚动视图的最大滚动范围
       // 根据动画的进度，滚动视图到相应的位置，从而实现平滑滚动效果
-      print(animationController.value );
-      print(scrollController.position.maxScrollExtent );
-      scrollController.jumpTo(animationController.value *
-          scrollController.position.maxScrollExtent);
+      print(animationController.value);
+      print(scrollController.position.maxScrollExtent);
+      scrollController.jumpTo(animationController.value * scrollController.position.maxScrollExtent);
     });
   }
 

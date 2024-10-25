@@ -5,14 +5,22 @@ import 'package:flutter_barrage/flutter_barrage.dart';
 import 'package:get/get.dart';
 
 class TimeScreenState {
+
   RxInt currentSecond = 0.obs;
   RxInt currentMinute = 0.obs;
   RxInt currentHour = 0.obs;
-  RxInt currentDay = 0.obs;
-  RxInt currentMonth = 0.obs;
-  RxInt currentYear = 0.obs;
-  RxInt currentWeek = 0.obs;
-  RxInt currentWeekDay = 0.obs;
+
+  RxDouble animationSecond = 0.0001.obs;
+  RxDouble animationMinute = 0.0001.obs;
+  RxDouble animationHour = 0.0001.obs;
+
+  RxBool isSecondReversePhase = false.obs;
+  RxBool isMinuteReversePhase = false.obs;
+  RxBool isHourReversePhase = false.obs;
+
+  RxDouble zeroAngle = 0.0001.obs;
+
+
   TimeScreenState() {
     ///Initialize variables
   }
