@@ -3,6 +3,8 @@ import 'package:flutter_scaffold/pages/root/root_view.dart';
 import 'package:get/get.dart';
 import 'category/category_binding.dart';
 import 'category/category_view.dart';
+import 'functions/gobang/gobang_binding.dart';
+import 'functions/gobang/gobang_view.dart';
 import 'functions/handheld_barrage/handheld_barrage_binding.dart';
 import 'functions/handheld_barrage/handheld_barrage_view.dart';
 import 'functions/time_screen/time_screen_binding.dart';
@@ -21,6 +23,7 @@ const String category = '/category'; //category
 const String line = '/line'; //category
 const String handheldBarrage = '/handheldBarrage'; //手持弹幕
 const String timeScreen = '/timeScreen'; //时间屏幕
+const String gobang = '/gobang'; //五子棋
 
 List<GetPage> routePage = [
   GetPage(name: loading, page: () => const LoadingPage(), binding: LoadingBinding()),
@@ -30,4 +33,5 @@ List<GetPage> routePage = [
   GetPage(name: line, page: () => const LinePage(), binding: LineBinding()),
   GetPage(name: handheldBarrage, page: () => const HandheldBarragePage(), binding: HandheldBarrageBinding()),
   GetPage(name: timeScreen, page: () => const TimeScreenPage(), binding: TimeScreenBinding()),
+  GetPage(name: gobang, page: () => const GoBangPage(), binding: GoBangBinding()),
 ];
