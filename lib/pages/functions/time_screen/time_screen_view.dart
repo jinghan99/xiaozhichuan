@@ -21,17 +21,17 @@
               width: width,
               height: height,
               child: Obx(() {
-                Color _color = Colors.black;
+                Color color = Colors.black;
                 state.currentSecond.value;
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    buildHour(logic, state, _color),
+                    buildHour(logic, state, color),
                     buildPoint(),
-                    buildMinute(logic, state, _color),
+                    buildMinute(logic, state, color),
                     buildPoint(),
-                    buildSeconds(logic, state, _color),
+                    buildSeconds(logic, state, color),
                   ],
                 );
               }),
@@ -53,7 +53,7 @@
 
     Container buildSeconds(TimeScreenLogic logic, TimeScreenState state, Color _color) {
       return Container(
-        padding: EdgeInsets.all(5),
+        padding: const EdgeInsets.all(5),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -92,7 +92,7 @@
 
     Container buildMinute(TimeScreenLogic logic, TimeScreenState state, Color _color) {
       return Container(
-        padding: EdgeInsets.all(5),
+        padding: const EdgeInsets.all(5),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -131,7 +131,7 @@
 
     Container buildHour(TimeScreenLogic logic, TimeScreenState state, Color _color) {
       return Container(
-        padding: EdgeInsets.all(5),
+        padding: const EdgeInsets.all(5),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -170,16 +170,16 @@
       return  Container(
         width: 0.27.sw,
         height: 2,
-        color: Color(0xFFF6EBE0),
+        color: const Color(0xFFF6EBE0),
       ); // 可以在这里使用 Divider，自动适应宽度;
     }
 
     AppBar buildAppBar() {
       return AppBar(
         leading: Container(
-          padding: EdgeInsets.only(left: 10),
+          padding: const EdgeInsets.only(left: 10),
           child: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             color: c7BBD9C,
             onPressed: () {
               Get.back();
@@ -209,7 +209,7 @@
     final Alignment _alignment;
     final Color _color;
 
-    const ClipRectText(this._value, this._alignment, this._color);
+    const ClipRectText(this._value, this._alignment, this._color, {super.key});
 
     @override
     Widget build(BuildContext context) {
