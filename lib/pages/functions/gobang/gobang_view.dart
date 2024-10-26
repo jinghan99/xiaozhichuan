@@ -40,7 +40,7 @@ class GoBangPage extends StatelessWidget {
                       ),
                       onPointerUp: (PointerUpEvent event) {
                         //   点击事件
-                        print("打印点击坐标 ${event.localPosition}");
+                        logger.d("打印点击坐标 ${event.localPosition}");
                         var ll = transOffset(event.localPosition); // 调用 transOffset 方法将点击位置转换成最近的有效的棋盘点位置
                         if (state.offs.contains(ll)) {
                           EasyLoading.showToast('该位置已经下过子了，不能重复下',duration:  Duration(milliseconds: 400));
@@ -69,15 +69,13 @@ class GoBangPage extends StatelessWidget {
             Text("规则：先连成5子者获胜, 黑棋执先", style: b12),
             Container(
               width: 100.w,
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
+              margin: const EdgeInsets.all(10),
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                color:  Color(0xFFff9867),
-
+                color:  const Color(0xFFff9867),
               ),
-
               child: Text("悔一步", style: w16b),
             ).onTap(() {
               logic.withdrawChessPiece();
