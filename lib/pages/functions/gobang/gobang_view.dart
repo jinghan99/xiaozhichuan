@@ -15,58 +15,73 @@ class GoBangPage extends StatelessWidget {
     final GoBangState state = Get.find<GoBangLogic>().state;
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: buildAppBar("五子棋"),
-      body: DecoratedBox(
-        decoration: const BoxDecoration(color: Colors.white),
-        child: Stack(
+      appBar: buildAppBar("五子棋", color: const Color(0xFFDCC48C), textStyle: b16b, backColor: Colors.black),
+      body: Container(
+        decoration: const BoxDecoration(color: Color(0xFFDCC48C)),
+        child: Column(
           children: [
-            Center(
-              child: RepaintBoundary(
-                child: CustomPaint(
-                  size: buildSize(), // 指定画布大小
-                  painter: MyChessBg(), // 调用 MyChessBg 类来绘制棋盘背景
-                ),
-              ),
-            ),
-            Center(
-              child: Obx(() {
-                state.offs.value;
-                return Listener(
-                  child: CustomPaint(
-                    size: buildSize(), // 指定画布大小
-                    painter: MyChessCh(offset: state.offs), // 调用 MyChessCh 类来绘制棋子
+            Stack(
+              children: [
+                Center(
+                  child: RepaintBoundary(
+                    child: CustomPaint(
+                      size: buildSize(), // 指定画布大小
+                      painter: MyChessBg(), // 调用 MyChessBg 类来绘制棋盘背景
+                    ),
                   ),
-                  onPointerUp: (PointerUpEvent event) {
-                    //   点击事件
-                    print("打印点击坐标 ${event.localPosition}");
-                    var ll = transOffset(event.localPosition); // 调用 transOffset 方法将点击位置转换成最近的有效的棋盘点位置
-                    if (state.offs.contains(ll)) {
-                      Get.snackbar(
-                        "提示", // 提示标题
-                        "该位置已经下过子了，不能重复下", // 提示内容
-                        snackPosition: SnackPosition.BOTTOM, // 位置
-                        duration: Duration(seconds: 2), // 显示时长
-                      );
-                      return;
-                    }
-                    state.offs.add(ll);
-                    if (state.offs.length % 2 == 1) {
-                      state.boffs.add(ll); //黑棋
-                      if (win(ll, true, state.boffs)) {
-                        // 判断黑棋是否获胜
-                        _dialog(state, "黑棋获胜");
-                      }
-                    } else {
-                      state.woffs.add(ll); //白棋
-                      if (win(ll, false, state.woffs)) {
-                        // 判断黑棋是否获胜
-                        _dialog(state, "白棋获胜");
-                      }
-                    }
-                  },
-                );
-              }),
-            )
+                ),
+                Center(
+                  child: Obx(() {
+                    state.offs.value;
+                    return Listener(
+                      child: CustomPaint(
+                        size: buildSize(), // 指定画布大小
+                        painter: MyChessCh(offset: state.offs), // 调用 MyChessCh 类来绘制棋子
+                      ),
+                      onPointerUp: (PointerUpEvent event) {
+                        //   点击事件
+                        print("打印点击坐标 ${event.localPosition}");
+                        var ll = transOffset(event.localPosition); // 调用 transOffset 方法将点击位置转换成最近的有效的棋盘点位置
+                        if (state.offs.contains(ll)) {
+                          EasyLoading.showToast('该位置已经下过子了，不能重复下',duration:  Duration(milliseconds: 400));
+                          return;
+                        }
+                        state.offs.add(ll);
+                        if (state.offs.length % 2 == 1) {
+                          state.boffs.add(ll); //黑棋
+                          if (win(ll, true, state.boffs)) {
+                            // 判断黑棋是否获胜
+                            _dialog(state,'黑棋获胜');
+                          }
+                        } else {
+                          state.woffs.add(ll); //白棋
+                          if (win(ll, false, state.woffs)) {
+                            // 判断黑棋是否获胜
+                            _dialog(state, "白棋获胜");
+                          }
+                        }
+                      },
+                    );
+                  }),
+                )
+              ],
+            ).marginSymmetric(vertical: 20.h, horizontal: 10.w),
+            Text("规则：先连成5子者获胜, 黑棋执先", style: b12),
+            Container(
+              width: 100.w,
+              padding: EdgeInsets.all(10),
+              margin: EdgeInsets.all(10),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color:  Color(0xFFff9867),
+
+              ),
+
+              child: Text("悔一步", style: w16b),
+            ).onTap(() {
+              logic.withdrawChessPiece();
+            })
           ],
         ),
       ),
@@ -78,8 +93,9 @@ class GoBangPage extends StatelessWidget {
 
   void _dialog(GoBangState state, String msg) {
     Get.defaultDialog(
-      title: "获胜提醒！", // 对话框标题
-      middleText: msg, // 对话框内容
+      title: "提醒！", // 对话框标题
+      middleText: msg,
+      middleTextStyle: TextStyle(color: Colors.black, fontSize: 20.sp,fontWeight: FontWeight.bold),// 对话框内容
       barrierDismissible: false, // 不允许点击空白处关闭
       confirm: TextButton(
         onPressed: () {
@@ -88,7 +104,7 @@ class GoBangPage extends StatelessWidget {
           state.woffs.clear(); // 清空白棋
           Get.back(); // 关闭对话框
         },
-        child: Text("确定"),
+        child: Text("确定",style: b16,),
       ),
     );
   }
@@ -98,7 +114,7 @@ class GoBangPage extends StatelessWidget {
     double ddx = 0; // 最终位置的 x 坐标
     double ddy = 0; // 最终位置的 y 坐标
     double level = GO_BANG_GRID_SIZE; // 一格的宽度
-    double half = GO_BANG_GRID_SIZE / 2 ; // 一格的宽度
+    double half = GO_BANG_GRID_SIZE / 2; // 一格的宽度
     int modx = offset.dx ~/ level; // 点击位置左侧的格子数 ~/ 符号表示取整除法
     // 判断 x 坐标是否超过半格
     ddx = offset.dx - level * modx <= half ? level * modx : level * (modx + 1);
@@ -108,6 +124,7 @@ class GoBangPage extends StatelessWidget {
     print("ddx= ${ddx} + ddy = ${ddy}");
     return Offset(ddx, ddy); // 返回棋盘上的有效位置
   }
+
   /// 判断获胜的方法
   /// offset：当前落子的位置，black：当前是否为黑棋，offs：对应颜色棋子的集合
   bool win(Offset offset, bool black, List<Offset> offs) {
@@ -169,7 +186,9 @@ class GoBangPage extends StatelessWidget {
     }
 
     // 左上
-    for (double x = offset.dx - GO_BANG_GRID_SIZE, y = offset.dy - GO_BANG_GRID_SIZE; x > 0 && y > 0; x -= GO_BANG_GRID_SIZE, y -= GO_BANG_GRID_SIZE) {
+    for (double x = offset.dx - GO_BANG_GRID_SIZE, y = offset.dy - GO_BANG_GRID_SIZE;
+        x > 0 && y > 0;
+        x -= GO_BANG_GRID_SIZE, y -= GO_BANG_GRID_SIZE) {
       var item = Offset(x, y);
       if (offs.contains(item)) {
         lt_count++;
@@ -180,7 +199,9 @@ class GoBangPage extends StatelessWidget {
     }
 
     // 右上
-    for (double x = offset.dx + GO_BANG_GRID_SIZE, y = offset.dy - GO_BANG_GRID_SIZE; x <= canvasWidth && y > 0; x += GO_BANG_GRID_SIZE, y -= GO_BANG_GRID_SIZE) {
+    for (double x = offset.dx + GO_BANG_GRID_SIZE, y = offset.dy - GO_BANG_GRID_SIZE;
+        x <= canvasWidth && y > 0;
+        x += GO_BANG_GRID_SIZE, y -= GO_BANG_GRID_SIZE) {
       var item = Offset(x, y);
       if (offs.contains(item)) {
         rt_count++;
@@ -191,7 +212,9 @@ class GoBangPage extends StatelessWidget {
     }
 
     // 左下
-    for (double x = offset.dx - GO_BANG_GRID_SIZE, y = offset.dy + GO_BANG_GRID_SIZE; x > 0 && y <= canvasHeight; x -= GO_BANG_GRID_SIZE, y += GO_BANG_GRID_SIZE) {
+    for (double x = offset.dx - GO_BANG_GRID_SIZE, y = offset.dy + GO_BANG_GRID_SIZE;
+        x > 0 && y <= canvasHeight;
+        x -= GO_BANG_GRID_SIZE, y += GO_BANG_GRID_SIZE) {
       var item = Offset(x, y);
       if (offs.contains(item)) {
         lb_count++;
@@ -202,7 +225,9 @@ class GoBangPage extends StatelessWidget {
     }
 
     // 右下
-    for (double x = offset.dx + GO_BANG_GRID_SIZE, y = offset.dy + GO_BANG_GRID_SIZE; x <= canvasWidth && y <= canvasHeight; x += GO_BANG_GRID_SIZE, y += GO_BANG_GRID_SIZE) {
+    for (double x = offset.dx + GO_BANG_GRID_SIZE, y = offset.dy + GO_BANG_GRID_SIZE;
+        x <= canvasWidth && y <= canvasHeight;
+        x += GO_BANG_GRID_SIZE, y += GO_BANG_GRID_SIZE) {
       var item = Offset(x, y);
       if (offs.contains(item)) {
         rb_count++;
