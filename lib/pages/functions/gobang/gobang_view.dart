@@ -74,8 +74,9 @@ class GoBangPage extends StatelessWidget {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                color:  const Color(0xFFff9867),
+                color:  const Color(0xFFA66E38),
               ),
+
               child: Text("悔一步", style: w16b),
             ).onTap(() {
               logic.withdrawChessPiece();
