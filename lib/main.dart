@@ -36,7 +36,7 @@ Widget _buildApp() {
     child: GetMaterialApp(//GetX自带的MaterialApp，配置路由表，管理路由入栈、出栈等操作
       debugShowCheckedModeBanner: false, // 关闭调试模式的横幅
       initialRoute: '/', // 初始路由
-      title: '一个小纸船', // 应用标题
+      title: '小纸船', // 应用标题
       theme: _buildAppTheme(), // 使用分离的方法构建主题
       defaultTransition: Transition.fade, // 默认过渡动画
       home: const LoadingPage(), // 应用的主页面
