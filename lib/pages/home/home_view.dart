@@ -29,6 +29,7 @@ class HomePage extends StatelessWidget {
                 color: Colors.white,
               ),
               child: ExpansionTile(
+                initiallyExpanded: index == 0,//第一个保持展开
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(0)),
                 ),
@@ -50,8 +51,7 @@ class HomePage extends StatelessWidget {
                     Text(categoryName, style: b16b),
                     const SizedBox(width: 20),
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 7, vertical: 2),
+                      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
                       decoration: BoxDecoration(
                         color: c7BBD9C,
                         borderRadius: BorderRadius.circular(20),
@@ -62,7 +62,7 @@ class HomePage extends StatelessWidget {
                 ),
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(left:19,right: 5, bottom: 15,top: 10),
+                    margin: const EdgeInsets.only(left: 19, right: 5, bottom: 15, top: 10),
                     child: Wrap(
                       spacing: 10, // 子元素之间的水平间距
                       runSpacing: 20, // 子元素之间的垂直间距
@@ -72,7 +72,7 @@ class HomePage extends StatelessWidget {
                         return GestureDetector(
                           onTap: () => Get.toNamed(appRoute), // 点击事件处理
                           child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                             decoration: BoxDecoration(
                               color: cF5, // 背景颜色
                               borderRadius: BorderRadius.circular(8), // 圆角
