@@ -21,13 +21,13 @@ extension WidgetTapX on Widget {
 // appbar
 AppBar buildAppBar(
   String title, {
-  Color color = const Color(0xFFDCC48C),
+  Color color = const Color(0xffEAF5EF),
   TextStyle textStyle = const TextStyle(
     color: Color(0xFF7BBD9C), // 使用常量颜色
     fontSize: 16, // 使用常量字体大小
     fontWeight: FontWeight.bold,
   ),
-      Color backColor = Colors.white,
+      Color backColor =const Color(0xFF7BBD9C),
 }) {
   return AppBar(
     leading: Container(
