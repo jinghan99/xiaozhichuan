@@ -90,4 +90,7 @@ flutter pub add  flutter_barrage
 flutter pub add  flutter_colorpicker
 flutter pub add wakelock_plus # 不息屏
 
+应用程序图标，上半是小船白色背景，下半是水波浅浅的海洋颜色，小船是一个简单易辨认的纸船轮廓，带有微妙的折线以显示细节小船是浅色绿色调的#7BBD9CFF颜色，船内包括极简主义小工具图标,比如 时钟，扫码，工具，小游戏等，图标均匀分布在船内，纸船飘荡在小溪河流，载着小工具前行,划出点点水波痕迹，
 
+
+The application icon has a white background with a boat on the top half and a light ocean color with water waves on the bottom half. The boat is a simple and easily recognizable paper boat outline with subtle fold lines to show details. The boat is a light green color #7BBD9CFF. The boat includes minimalist gadget icons, such as clock, code scanning, tools, small games, etc. The icons are evenly distributed in the boat. The paper boat floats in the stream and river, carrying the gadgets forward, leaving traces of water waves.
