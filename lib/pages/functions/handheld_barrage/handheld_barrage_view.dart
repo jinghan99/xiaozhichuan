@@ -13,7 +13,7 @@ class HandheldBarragePage extends StatelessWidget {
     final HandheldBarrageState state = Get.find<HandheldBarrageLogic>().state;
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: buildAppBar(),
+      appBar: buildAppBar("手持弹幕"),
       body: Column(
         children: [
           Expanded(
@@ -268,34 +268,7 @@ class HandheldBarragePage extends StatelessWidget {
     });
   }
 
-  AppBar buildAppBar() {
-    return AppBar(
-      leading: Container(
-        padding: EdgeInsets.only(left: 10),
-        child: IconButton(
-          icon: Icon(Icons.arrow_back),
-          color: c7BBD9C,
-          onPressed: () {
-            Get.back();
-          },
-        ),
-      ),
-      backgroundColor: cEAF5EF,
-      title: Container(
-        width: 1.sw,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "手持弹幕",
-              style: gr16b,
-            ).paddingOnly(bottom: 5),
-          ],
-        ),
-      ),
-    );
-  }
+
 
   // 颜色选择器
   void _openColorPickerDialog(BuildContext context, Rx<Color> selectedColor) {

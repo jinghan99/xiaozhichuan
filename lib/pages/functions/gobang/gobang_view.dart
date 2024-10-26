@@ -15,14 +15,15 @@ class GoBangPage extends StatelessWidget {
     final GoBangState state = Get.find<GoBangLogic>().state;
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: buildAppBar("五子棋"),
       body: DecoratedBox(
-        decoration: BoxDecoration(color: Colors.white),
+        decoration: const BoxDecoration(color: Colors.white),
         child: Stack(
           children: [
             Center(
               child: RepaintBoundary(
                 child: CustomPaint(
-                  size: Size(300, 300), // 指定画布大小
+                  size: buildSize(), // 指定画布大小
                   painter: MyChessBg(), // 调用 MyChessBg 类来绘制棋盘背景
                 ),
               ),
@@ -32,7 +33,7 @@ class GoBangPage extends StatelessWidget {
                 state.offs.value;
                 return Listener(
                   child: CustomPaint(
-                    size: Size(300, 300), // 指定画布大小
+                    size: buildSize(), // 指定画布大小
                     painter: MyChessCh(offset: state.offs), // 调用 MyChessCh 类来绘制棋子
                   ),
                   onPointerUp: (PointerUpEvent event) {
@@ -72,6 +73,9 @@ class GoBangPage extends StatelessWidget {
     );
   }
 
+  // 画布大小
+  Size buildSize() => Size(0.85.sw, 0.7.sh);
+
   void _dialog(GoBangState state, String msg) {
     Get.defaultDialog(
       title: "获胜提醒！", // 对话框标题
@@ -93,20 +97,17 @@ class GoBangPage extends StatelessWidget {
   Offset transOffset(Offset offset) {
     double ddx = 0; // 最终位置的 x 坐标
     double ddy = 0; // 最终位置的 y 坐标
-    double level = 20; // 一格的宽度
-    int modx = offset.dx ~/ level; // 点击位置左侧的格子数
-
+    double level = GO_BANG_GRID_SIZE; // 一格的宽度
+    double half = GO_BANG_GRID_SIZE / 2 ; // 一格的宽度
+    int modx = offset.dx ~/ level; // 点击位置左侧的格子数 ~/ 符号表示取整除法
     // 判断 x 坐标是否超过半格
-    ddx = offset.dx - level * modx <= 10 ? level * modx : level * (modx + 1);
+    ddx = offset.dx - level * modx <= half ? level * modx : level * (modx + 1);
     int mody = offset.dy ~/ level;
-
     // 判断 y 坐标是否超过半格
-    ddy = offset.dy - level * mody <= 10 ? level * mody : level * (mody + 1);
-
+    ddy = offset.dy - level * mody <= half ? level * mody : level * (mody + 1);
     print("ddx= ${ddx} + ddy = ${ddy}");
     return Offset(ddx, ddy); // 返回棋盘上的有效位置
   }
-
   /// 判断获胜的方法
   /// offset：当前落子的位置，black：当前是否为黑棋，offs：对应颜色棋子的集合
   bool win(Offset offset, bool black, List<Offset> offs) {
@@ -119,8 +120,12 @@ class GoBangPage extends StatelessWidget {
     int lt_count = 1, rt_count = 1, lb_count = 1, rb_count = 1;
 
     // 各方向遍历，判断是否形成 5 子
+    // 获取画布的宽度和高度
+    double canvasWidth = buildSize().width;
+    double canvasHeight = buildSize().height;
+
     // 向左
-    for (var x = offset.dx - 20; x > 0; x -= 20) {
+    for (double x = offset.dx - GO_BANG_GRID_SIZE; x > 0; x -= GO_BANG_GRID_SIZE) {
       var item = Offset(x, offset.dy);
       if (offs.contains(item)) {
         l_count++;
@@ -131,7 +136,7 @@ class GoBangPage extends StatelessWidget {
     }
 
     // 向右
-    for (var x = offset.dx + 20; x <= 300; x += 20) {
+    for (double x = offset.dx + GO_BANG_GRID_SIZE; x <= canvasWidth; x += GO_BANG_GRID_SIZE) {
       var item = Offset(x, offset.dy);
       if (offs.contains(item)) {
         r_count++;
@@ -142,7 +147,7 @@ class GoBangPage extends StatelessWidget {
     }
 
     // 向上
-    for (var y = offset.dy - 20; y > 0; y -= 20) {
+    for (double y = offset.dy - GO_BANG_GRID_SIZE; y > 0; y -= GO_BANG_GRID_SIZE) {
       var item = Offset(offset.dx, y);
       if (offs.contains(item)) {
         t_count++;
@@ -153,7 +158,7 @@ class GoBangPage extends StatelessWidget {
     }
 
     // 向下
-    for (var y = offset.dy + 20; y <= 300; y += 20) {
+    for (double y = offset.dy + GO_BANG_GRID_SIZE; y <= canvasHeight; y += GO_BANG_GRID_SIZE) {
       var item = Offset(offset.dx, y);
       if (offs.contains(item)) {
         b_count++;
@@ -164,7 +169,7 @@ class GoBangPage extends StatelessWidget {
     }
 
     // 左上
-    for (var x = offset.dx - 20, y = offset.dy - 20; x > 0 && y > 0; x -= 20, y -= 20) {
+    for (double x = offset.dx - GO_BANG_GRID_SIZE, y = offset.dy - GO_BANG_GRID_SIZE; x > 0 && y > 0; x -= GO_BANG_GRID_SIZE, y -= GO_BANG_GRID_SIZE) {
       var item = Offset(x, y);
       if (offs.contains(item)) {
         lt_count++;
@@ -175,7 +180,7 @@ class GoBangPage extends StatelessWidget {
     }
 
     // 右上
-    for (var x = offset.dx + 20, y = offset.dy - 20; x <= 300 && y > 0; x += 20, y -= 20) {
+    for (double x = offset.dx + GO_BANG_GRID_SIZE, y = offset.dy - GO_BANG_GRID_SIZE; x <= canvasWidth && y > 0; x += GO_BANG_GRID_SIZE, y -= GO_BANG_GRID_SIZE) {
       var item = Offset(x, y);
       if (offs.contains(item)) {
         rt_count++;
@@ -186,7 +191,7 @@ class GoBangPage extends StatelessWidget {
     }
 
     // 左下
-    for (var x = offset.dx - 20, y = offset.dy + 20; x > 0 && y <= 300; x -= 20, y += 20) {
+    for (double x = offset.dx - GO_BANG_GRID_SIZE, y = offset.dy + GO_BANG_GRID_SIZE; x > 0 && y <= canvasHeight; x -= GO_BANG_GRID_SIZE, y += GO_BANG_GRID_SIZE) {
       var item = Offset(x, y);
       if (offs.contains(item)) {
         lb_count++;
@@ -197,7 +202,7 @@ class GoBangPage extends StatelessWidget {
     }
 
     // 右下
-    for (var x = offset.dx + 20, y = offset.dy + 20; x <= 300 && y <= 300; x += 20, y += 20) {
+    for (double x = offset.dx + GO_BANG_GRID_SIZE, y = offset.dy + GO_BANG_GRID_SIZE; x <= canvasWidth && y <= canvasHeight; x += GO_BANG_GRID_SIZE, y += GO_BANG_GRID_SIZE) {
       var item = Offset(x, y);
       if (offs.contains(item)) {
         rb_count++;

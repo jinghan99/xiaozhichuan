@@ -20,3 +20,33 @@ extension WidgetTapX on Widget {
     );
   }
 }
+
+// appbar
+AppBar buildAppBar(String title) {
+  return AppBar(
+    leading: Container(
+      padding: EdgeInsets.only(left: 10),
+      child: IconButton(
+        icon: Icon(Icons.arrow_back),
+        color: c7BBD9C,
+        onPressed: () {
+          Get.back();
+        },
+      ),
+    ),
+    backgroundColor: cEAF5EF,
+    title: Container(
+      width: 1.sw,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            title,
+            style: gr16b,
+          ).paddingOnly(bottom: 5),
+        ],
+      ),
+    ),
+  );
+}

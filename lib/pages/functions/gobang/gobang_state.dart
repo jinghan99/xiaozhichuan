@@ -5,6 +5,7 @@ import 'package:flutter_barrage/flutter_barrage.dart';
 import 'package:get/get.dart';
 
 class GoBangState {
+
   Offset off = Offset.zero;
   RxList<Offset> offs = <Offset>[].obs;//所有棋子的集合
   RxList<Offset> boffs = <Offset>[].obs;//黑棋集合
@@ -14,3 +15,5 @@ class GoBangState {
     ///Initialize variables
   }
 }
+//
+const GO_BANG_GRID_SIZE = 30.0; // 格子大小

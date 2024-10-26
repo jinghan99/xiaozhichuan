@@ -12,14 +12,14 @@ class MyChessCh extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     logger.i('chess ch');
-    var rect = Offset.zero & size;
     drawPieces(canvas, offset); // 绘制棋子，使用传入的偏移位置
   }
 
   // 设定是否需要重绘，每次调用都重新绘制棋子
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true; // 在 offset 改变时重新绘制棋子
+  bool shouldRepaint(covariant MyChessCh oldDelegate) {
+    // 只有当 offset 列表变化时才需要重绘
+    return oldDelegate.offset != offset;
   }
 
   //画棋子的函数，传入一个偏移位置列表 offsets 来确定棋子的位置
