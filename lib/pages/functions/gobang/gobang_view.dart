@@ -15,9 +15,9 @@ class GoBangPage extends StatelessWidget {
     final GoBangState state = Get.find<GoBangLogic>().state;
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: buildAppBar("五子棋", color: const Color(0xFFDCC48C ), textStyle: b16b, backColor: Colors.black),
+      appBar: buildAppBar("五子棋", color: const Color(0xffDCC48C ), textStyle: b16b, backColor: Colors.black),
       body: Container(
-        decoration: const BoxDecoration(color: Color(0xFFDCC48C)),
+        decoration: const BoxDecoration(color: Color(0xffDCC48C)),
         child: Column(
           children: [
             Stack(
