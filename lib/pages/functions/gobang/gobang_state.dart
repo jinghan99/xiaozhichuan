@@ -1,5 +1,7 @@
 
 
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_barrage/flutter_barrage.dart';
 import 'package:get/get.dart';
@@ -15,5 +17,11 @@ class GoBangState {
     ///Initialize variables
   }
 }
-//
-const GO_BANG_GRID_SIZE = 30.0; // 格子大小
+
+// 自定义五子棋常量
+abstract final class GoBangs {
+
+  static const double GO_BANG_GRID_SIZE =30.0;
+
+}
+

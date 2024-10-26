@@ -102,7 +102,7 @@ class HomePage extends StatelessWidget {
           onPressed: () {},
         ),
       ),
-      backgroundColor: cEAF5EF,
+      backgroundColor: cE5F2EB,
       title: Container(
         width: 1.sw,
         child: Column(

@@ -15,7 +15,7 @@ class GoBangPage extends StatelessWidget {
     final GoBangState state = Get.find<GoBangLogic>().state;
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: buildAppBar("五子棋", color: const Color(0xFFDCC48C), textStyle: b16b, backColor: Colors.black),
+      appBar: buildAppBar("五子棋", color: const Color(0xFFDCC48C ), textStyle: b16b, backColor: Colors.black),
       body: Container(
         decoration: const BoxDecoration(color: Color(0xFFDCC48C)),
         child: Column(
@@ -111,8 +111,8 @@ class GoBangPage extends StatelessWidget {
   Offset transOffset(Offset offset) {
     double ddx = 0; // 最终位置的 x 坐标
     double ddy = 0; // 最终位置的 y 坐标
-    double level = GO_BANG_GRID_SIZE; // 一格的宽度
-    double half = GO_BANG_GRID_SIZE / 2; // 一格的宽度
+    double level = GoBangs.GO_BANG_GRID_SIZE; // 一格的宽度
+    double half = GoBangs.GO_BANG_GRID_SIZE / 2; // 一格的宽度
     int modx = offset.dx ~/ level; // 点击位置左侧的格子数 ~/ 符号表示取整除法
     // 判断 x 坐标是否超过半格
     ddx = offset.dx - level * modx <= half ? level * modx : level * (modx + 1);
@@ -140,7 +140,7 @@ class GoBangPage extends StatelessWidget {
     double canvasHeight = buildSize().height;
 
     // 向左
-    for (double x = offset.dx - GO_BANG_GRID_SIZE; x > 0; x -= GO_BANG_GRID_SIZE) {
+    for (double x = offset.dx - GoBangs.GO_BANG_GRID_SIZE; x > 0; x -= GoBangs.GO_BANG_GRID_SIZE) {
       var item = Offset(x, offset.dy);
       if (offs.contains(item)) {
         l_count++;
@@ -151,7 +151,7 @@ class GoBangPage extends StatelessWidget {
     }
 
     // 向右
-    for (double x = offset.dx + GO_BANG_GRID_SIZE; x <= canvasWidth; x += GO_BANG_GRID_SIZE) {
+    for (double x = offset.dx + GoBangs.GO_BANG_GRID_SIZE; x <= canvasWidth; x += GoBangs.GO_BANG_GRID_SIZE) {
       var item = Offset(x, offset.dy);
       if (offs.contains(item)) {
         r_count++;
@@ -162,7 +162,7 @@ class GoBangPage extends StatelessWidget {
     }
 
     // 向上
-    for (double y = offset.dy - GO_BANG_GRID_SIZE; y > 0; y -= GO_BANG_GRID_SIZE) {
+    for (double y = offset.dy - GoBangs.GO_BANG_GRID_SIZE; y > 0; y -= GoBangs.GO_BANG_GRID_SIZE) {
       var item = Offset(offset.dx, y);
       if (offs.contains(item)) {
         t_count++;
@@ -173,7 +173,7 @@ class GoBangPage extends StatelessWidget {
     }
 
     // 向下
-    for (double y = offset.dy + GO_BANG_GRID_SIZE; y <= canvasHeight; y += GO_BANG_GRID_SIZE) {
+    for (double y = offset.dy + GoBangs.GO_BANG_GRID_SIZE; y <= canvasHeight; y += GoBangs.GO_BANG_GRID_SIZE) {
       var item = Offset(offset.dx, y);
       if (offs.contains(item)) {
         b_count++;
@@ -184,9 +184,9 @@ class GoBangPage extends StatelessWidget {
     }
 
     // 左上
-    for (double x = offset.dx - GO_BANG_GRID_SIZE, y = offset.dy - GO_BANG_GRID_SIZE;
+    for (double x = offset.dx - GoBangs.GO_BANG_GRID_SIZE, y = offset.dy - GoBangs.GO_BANG_GRID_SIZE;
         x > 0 && y > 0;
-        x -= GO_BANG_GRID_SIZE, y -= GO_BANG_GRID_SIZE) {
+        x -= GoBangs.GO_BANG_GRID_SIZE, y -= GoBangs.GO_BANG_GRID_SIZE) {
       var item = Offset(x, y);
       if (offs.contains(item)) {
         lt_count++;
@@ -197,9 +197,9 @@ class GoBangPage extends StatelessWidget {
     }
 
     // 右上
-    for (double x = offset.dx + GO_BANG_GRID_SIZE, y = offset.dy - GO_BANG_GRID_SIZE;
+    for (double x = offset.dx + GoBangs.GO_BANG_GRID_SIZE, y = offset.dy - GoBangs.GO_BANG_GRID_SIZE;
         x <= canvasWidth && y > 0;
-        x += GO_BANG_GRID_SIZE, y -= GO_BANG_GRID_SIZE) {
+        x += GoBangs.GO_BANG_GRID_SIZE, y -= GoBangs.GO_BANG_GRID_SIZE) {
       var item = Offset(x, y);
       if (offs.contains(item)) {
         rt_count++;
@@ -210,9 +210,9 @@ class GoBangPage extends StatelessWidget {
     }
 
     // 左下
-    for (double x = offset.dx - GO_BANG_GRID_SIZE, y = offset.dy + GO_BANG_GRID_SIZE;
+    for (double x = offset.dx - GoBangs.GO_BANG_GRID_SIZE, y = offset.dy + GoBangs.GO_BANG_GRID_SIZE;
         x > 0 && y <= canvasHeight;
-        x -= GO_BANG_GRID_SIZE, y += GO_BANG_GRID_SIZE) {
+        x -= GoBangs.GO_BANG_GRID_SIZE, y += GoBangs.GO_BANG_GRID_SIZE) {
       var item = Offset(x, y);
       if (offs.contains(item)) {
         lb_count++;
@@ -223,9 +223,9 @@ class GoBangPage extends StatelessWidget {
     }
 
     // 右下
-    for (double x = offset.dx + GO_BANG_GRID_SIZE, y = offset.dy + GO_BANG_GRID_SIZE;
+    for (double x = offset.dx + GoBangs.GO_BANG_GRID_SIZE, y = offset.dy + GoBangs.GO_BANG_GRID_SIZE;
         x <= canvasWidth && y <= canvasHeight;
-        x += GO_BANG_GRID_SIZE, y += GO_BANG_GRID_SIZE) {
+        x += GoBangs.GO_BANG_GRID_SIZE, y += GoBangs.GO_BANG_GRID_SIZE) {
       var item = Offset(x, y);
       if (offs.contains(item)) {
         rb_count++;

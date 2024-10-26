@@ -5,10 +5,11 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_scaffold/pages/loading/loading_view.dart';
 import 'package:flutter_scaffold/pages/route.dart';
-import 'package:flutter_scaffold/tools/m_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+
+import 'colors/stf_colors.dart';
 
 
 void main() async {
@@ -28,14 +29,14 @@ Future<void> _setPreferredOrientations() async {
 // 构建整个应用
 Widget _buildApp() {
   return RefreshConfiguration(
-    headerBuilder: () => const MaterialClassicHeader(
-      color: c141630, // 刷新头部的颜色
+    headerBuilder: () => MaterialClassicHeader(
+      color: c7BBD9C, // 刷新头部的颜色
     ),
     footerBuilder: () => _buildCustomFooter(), // 自定义底部
     child: GetMaterialApp(//GetX自带的MaterialApp，配置路由表，管理路由入栈、出栈等操作
       debugShowCheckedModeBanner: false, // 关闭调试模式的横幅
       initialRoute: '/', // 初始路由
-      title: '脚手架', // 应用标题
+      title: '一个小纸船', // 应用标题
       theme: _buildAppTheme(), // 使用分离的方法构建主题
       defaultTransition: Transition.fade, // 默认过渡动画
       home: const LoadingPage(), // 应用的主页面

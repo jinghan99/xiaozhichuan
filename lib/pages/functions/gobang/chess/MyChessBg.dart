@@ -36,12 +36,12 @@ class MyChessBg extends CustomPainter {
       ..strokeWidth = 1;
 
     //依据格子大小 计算列数和行数
-    int widthCount = rect.width ~/ GO_BANG_GRID_SIZE;  // 计算可以容纳的列数
-    int heightCount = rect.height ~/ GO_BANG_GRID_SIZE; // 计算可以容纳的行数
+    int widthCount = rect.width ~/ GoBangs.GO_BANG_GRID_SIZE;  // 计算可以容纳的列数
+    int heightCount = rect.height ~/ GoBangs.GO_BANG_GRID_SIZE; // 计算可以容纳的行数
 
     // 画棋盘的横线
     for (int i = 0; i <= heightCount; ++i) {
-      double dy = rect.top + (GO_BANG_GRID_SIZE * i); // 确保每条横线的 y 坐标是整格
+      double dy = rect.top + (GoBangs.GO_BANG_GRID_SIZE * i); // 确保每条横线的 y 坐标是整格
       // 从左到右绘制一条水平线
       canvas.drawLine(Offset(rect.left, dy), Offset(rect.right, dy), paint);
       drawText(canvas, Offset(rect.left - 20, dy - 5), '$i'); // 绘制索引
@@ -49,7 +49,7 @@ class MyChessBg extends CustomPainter {
 
     // 画棋盘的竖线
     for (int i = 0; i <= widthCount; ++i) {
-      double dx = rect.left + (GO_BANG_GRID_SIZE * i); // 确保每条竖线的 x 坐标是整格
+      double dx = rect.left + (GoBangs.GO_BANG_GRID_SIZE * i); // 确保每条竖线的 x 坐标是整格
       // 从上到下绘制一条竖线
       canvas.drawLine(Offset(dx, rect.top), Offset(dx, rect.bottom), paint);
       drawText(canvas, Offset(dx - 5, rect.bottom + 5), '$i'); // 绘制索引

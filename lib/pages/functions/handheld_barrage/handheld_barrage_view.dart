@@ -91,7 +91,7 @@ class HandheldBarragePage extends StatelessWidget {
               min: 20,
               max: 180,
               activeColor: c7BBD9C,
-              inactiveColor: CDEEFE7, // 背景颜色
+              inactiveColor: cE5F2EB, // 背景颜色
             ),
           );
         }),
@@ -126,7 +126,7 @@ class HandheldBarragePage extends StatelessWidget {
               min: 1,
               max: 10,
               activeColor: c7BBD9C,
-              inactiveColor: CDEEFE7, // 背景颜色
+              inactiveColor: cE5F2EB, // 背景颜色
             ),
           );
         }),

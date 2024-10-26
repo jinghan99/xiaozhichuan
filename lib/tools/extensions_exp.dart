@@ -1,6 +1,5 @@
 import 'extensions_exp.dart';
 
-export '/tools/m_colors.dart';
 export 'package:flutter/material.dart';
 export 'package:flutter_screenutil/flutter_screenutil.dart';
 export '/http/my_dio.dart';
@@ -21,12 +20,12 @@ extension WidgetTapX on Widget {
 // appbar
 AppBar buildAppBar(
   String title, {
-  Color color = const Color(0xffEAF5EF),
+  Color color = const Color(0xffE5F2EB),
   TextStyle textStyle = const TextStyle(
-    color: Color(0xFF7BBD9C), // 使用常量颜色
+    color: Color(0xFF7BBD9C), //
     fontSize: 16, // 使用常量字体大小
     fontWeight: FontWeight.bold,
-  ),
+  ), //cE5F2EB
       Color backColor =const Color(0xFF7BBD9C),
 }) {
   return AppBar(
