@@ -33,7 +33,6 @@ Color c141630 =const Color(0xff141630);
 List<Color> o2o = [cF29C13, cF27113];
 
 LinearGradient linearGradient = LinearGradient(colors: [cF29C13, cF27113]);
-
 LinearGradient gradient = LinearGradient(colors: [cFE441F,cF86E52,cFE441F],begin: Alignment.topCenter,end: Alignment.bottomCenter);
 LinearGradient gradient3 = LinearGradient(colors: [cFE441F,cF86E52,cFE441F],begin: Alignment.centerLeft,end: Alignment.centerRight);
 LinearGradient gradient2 = LinearGradient(colors: [cFDD6AE,c7BBD9C,cF9D9B7],begin: Alignment.topRight,end: Alignment.bottomLeft);

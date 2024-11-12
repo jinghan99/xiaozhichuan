@@ -7,6 +7,8 @@ import 'functions/gobang/gobang_binding.dart';
 import 'functions/gobang/gobang_view.dart';
 import 'functions/handheld_barrage/handheld_barrage_binding.dart';
 import 'functions/handheld_barrage/handheld_barrage_view.dart';
+import 'functions/ount_down/count_down_binding.dart';
+import 'functions/ount_down/count_down_view.dart';
 import 'functions/time_screen/time_screen_binding.dart';
 import 'functions/time_screen/time_screen_view.dart';
 import 'home/home_binding.dart';
@@ -24,6 +26,7 @@ const String line = '/line'; //category
 const String handheldBarrage = '/handheldBarrage'; //手持弹幕
 const String timeScreen = '/timeScreen'; //时间屏幕
 const String gobang = '/gobang'; //五子棋
+const String countDown = '/countDown'; //倒计时
 
 List<GetPage> routePage = [
   GetPage(name: loading, page: () => const LoadingPage(), binding: LoadingBinding()),
@@ -34,4 +37,5 @@ List<GetPage> routePage = [
   GetPage(name: handheldBarrage, page: () => const HandheldBarragePage(), binding: HandheldBarrageBinding()),
   GetPage(name: timeScreen, page: () => const TimeScreenPage(), binding: TimeScreenBinding()),
   GetPage(name: gobang, page: () => const GoBangPage(), binding: GoBangBinding()),
+  GetPage(name: countDown, page: () => const CountDownPage(), binding: CountDownBinding()),
 ];
