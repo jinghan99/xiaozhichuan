@@ -99,7 +99,7 @@ class CountDownPage extends StatelessWidget {
             borderWidth: 5.0,
             direction: Axis.vertical,
             // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right). Defaults to Axis.vertical.
-            center: Text("Loading..."),
+            center: Text("${state.currentHour.value}:${state.currentMinute.value}:${state.currentSecond.value}",style: w14,),
           ),
         ),
         Container(
