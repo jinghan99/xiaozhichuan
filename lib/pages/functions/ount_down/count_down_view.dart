@@ -26,12 +26,12 @@ class CountDownPage extends StatelessWidget {
 
   Widget startButton(CountDownLogic logic, CountDownState state) {
     return Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [c7BBD9C, cE5F2EB],
-      )),
+      // decoration: BoxDecoration(
+      //     gradient: LinearGradient(
+      //   begin: Alignment.topLeft,
+      //   end: Alignment.bottomRight,
+      //   colors: [c7BBD9C, cE5F2EB],
+      // )),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -51,7 +51,6 @@ class CountDownPage extends StatelessWidget {
                   state.currentSecond.value = newDuration.inSeconds % 60;
                   state.currentMinute.value = newDuration.inMinutes % 60;
                   state.currentHour.value = newDuration.inHours;
-                  logger.d(state.currentMinute.value);
                 },
               ),
             ),
@@ -59,14 +58,15 @@ class CountDownPage extends StatelessWidget {
               return Container(
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  border: Border.all(color: state.totalSecond.value > 0 ? Colors.white : cB9B9B9, width: 1),
+                  color: cE5F2EB,
+                  border: Border.all(color: state.totalSecond.value > 0 ? c7BBD9C : cE5F2EB, width: 1),
                 ),
                 width: 180.w,
                 margin: EdgeInsets.only(top: 30.h),
                 padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 10.h),
                 child: (Text(
                   "开始计时",
-                  style: state.totalSecond.value > 0 ? w14 : g14,
+                  style: state.totalSecond.value > 0 ? b14 : g14,
                 )),
               ).onTap(() {
                 if (state.totalSecond.value > 0) {
@@ -98,10 +98,10 @@ class CountDownPage extends StatelessWidget {
             center: Text(
               "${state.currentHour.value.toString().padLeft(2, '0')}:${state.currentMinute.value.toString().padLeft(2, '0')}:${state.currentSecond.value.toString().padLeft(2, '0')}",
               style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 80.sp,
-                  fontWeight: FontWeight.bold,
-                  ),
+                color: Colors.white,
+                fontSize: 80.sp,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ),
