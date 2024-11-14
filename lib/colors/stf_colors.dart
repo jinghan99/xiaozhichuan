@@ -23,10 +23,10 @@ Color cF9D9B7 =const Color(0xffF9D9B7);
 Color cEAF5EF =const Color(0xffEAF5EF);
 
 
-// 小纸船 主题色
+// 小纸船 theme_color
 Color c7BBD9C =const Color(0xff7BBD9C);
 
-// 小纸船 背景色
+// 小纸船 background_color
 Color cE5F2EB =const Color(0xffe5f2eb);
 Color c141630 =const Color(0xff141630);
 

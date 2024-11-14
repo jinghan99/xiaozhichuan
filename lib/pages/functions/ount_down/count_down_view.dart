@@ -20,7 +20,7 @@ class CountDownPage extends StatelessWidget {
         backgroundColor: cF5,
         appBar: buildAppBar(),
         body: Obx(() {
-          return state.isStart.value ? buildProgressIndicator(logic,state) : startButton(logic, state);
+          return state.isStart.value ? buildProgressIndicator(logic, state) : startButton(logic, state);
         }));
   }
 
@@ -47,7 +47,7 @@ class CountDownPage extends StatelessWidget {
                 onTimerDurationChanged: (Duration newDuration) {
                   // 总秒数
                   state.totalSecond.value = newDuration.inSeconds;
-                // 获取总小时、剩余分钟、剩余秒数
+                  // 获取总小时、剩余分钟、剩余秒数
                   state.currentSecond.value = newDuration.inSeconds % 60;
                   state.currentMinute.value = newDuration.inMinutes % 60;
                   state.currentHour.value = newDuration.inHours;
@@ -81,7 +81,7 @@ class CountDownPage extends StatelessWidget {
   }
 
   // 计时器
-  Widget buildProgressIndicator(CountDownLogic logic,CountDownState state) {
+  Widget buildProgressIndicator(CountDownLogic logic, CountDownState state) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -90,22 +90,30 @@ class CountDownPage extends StatelessWidget {
           width: 1.sw,
           child: LiquidCircularProgressIndicator(
             value: state.animationValue.value,
-            // Defaults to 0.5.
             valueColor: AlwaysStoppedAnimation(c7BBD9C),
-            // Defaults to the current Theme's accentColor.
             backgroundColor: cE5F2EB,
-            // Defaults to the current Theme's backgroundColor.
             borderColor: c7BBD9C,
-            borderWidth: 5.0,
+            borderWidth: 2.0,
             direction: Axis.vertical,
-            // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right). Defaults to Axis.vertical.
-            center: Text("${state.currentHour.value}:${state.currentMinute.value}:${state.currentSecond.value}",style: w14,),
+            center: Text(
+              "${state.currentHour.value.toString().padLeft(2, '0')}:${state.currentMinute.value.toString().padLeft(2, '0')}:${state.currentSecond.value.toString().padLeft(2, '0')}",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 80.sp,
+                  fontWeight: FontWeight.bold,
+                // foreground: Paint()..style = PaintingStyle.stroke..strokeWidth = 3..color =Colors.white,
+                  ),
+            ),
           ),
         ),
         Container(
           margin: EdgeInsets.only(top: 20.h),
-          child: Icon(Icons.stop_circle,size: 60,color: c7BBD9C,),
-        ).onTap((){
+          child: Icon(
+            Icons.stop_circle,
+            size: 60,
+            color: c7BBD9C,
+          ),
+        ).onTap(() {
           logic.stopCountDown();
         })
       ],
