@@ -268,8 +268,6 @@ class HandheldBarragePage extends StatelessWidget {
     });
   }
 
-
-
   // 颜色选择器
   void _openColorPickerDialog(BuildContext context, Rx<Color> selectedColor) {
     showDialog(

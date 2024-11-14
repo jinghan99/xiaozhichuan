@@ -1,8 +1,4 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_scaffold/pages/functions/time_screen/time_screen_logic.dart';
-import 'package:flutter_scaffold/pages/functions/time_screen/time_screen_state.dart';
 import 'package:flutter_scaffold/tools/extensions_exp.dart';
 import 'package:liquid_progress_indicator_v2/liquid_progress_indicator.dart';
 
@@ -25,57 +21,50 @@ class CountDownPage extends StatelessWidget {
   }
 
   Widget startButton(CountDownLogic logic, CountDownState state) {
-    return Container(
-      // decoration: BoxDecoration(
-      //     gradient: LinearGradient(
-      //   begin: Alignment.topLeft,
-      //   end: Alignment.bottomRight,
-      //   colors: [c7BBD9C, cE5F2EB],
-      // )),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 100.h,
-              child: CupertinoTimerPicker(
-                mode: CupertinoTimerPickerMode.hms,
-                initialTimerDuration: const Duration(hours: 0, minutes: 0, seconds: 0),
-                minuteInterval: 1,
-                secondInterval: 1,
-                onTimerDurationChanged: (Duration newDuration) {
-                  // 总秒数
-                  state.totalSecond.value = newDuration.inSeconds;
-                  // 获取总小时、剩余分钟、剩余秒数
-                  state.currentSecond.value = newDuration.inSeconds % 60;
-                  state.currentMinute.value = newDuration.inMinutes % 60;
-                  state.currentHour.value = newDuration.inHours;
-                },
-              ),
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: 180.h,
+            child: CupertinoTimerPicker(
+              mode: CupertinoTimerPickerMode.hms,
+              initialTimerDuration: const Duration(hours: 0, minutes: 0, seconds: 0),
+              minuteInterval: 1,
+              secondInterval: 1,
+              onTimerDurationChanged: (Duration newDuration) {
+                // 总秒数
+                state.totalSecond.value = newDuration.inSeconds;
+                // 获取总小时、剩余分钟、剩余秒数
+                state.currentSecond.value = newDuration.inSeconds % 60;
+                state.currentMinute.value = newDuration.inMinutes % 60;
+                state.currentHour.value = newDuration.inHours;
+              },
             ),
-            Obx(() {
-              return Container(
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: cE5F2EB,
-                  border: Border.all(color: state.totalSecond.value > 0 ? c7BBD9C : cE5F2EB, width: 1),
-                ),
-                width: 180.w,
-                margin: EdgeInsets.only(top: 30.h),
-                padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 10.h),
-                child: (Text(
-                  "开始计时",
-                  style: state.totalSecond.value > 0 ? b14 : g14,
-                )),
-              ).onTap(() {
-                if (state.totalSecond.value > 0) {
-                  logic.startCountDown();
-                }
-              });
-            })
-          ],
-        ),
+          ),
+          Obx(() {
+            return Container(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                color: cE5F2EB,
+                border: Border.all(color: state.totalSecond.value > 0 ? c7BBD9C : cE5F2EB, width: 1),
+              ),
+              width: 200.w,
+              margin: EdgeInsets.only(top: 30.h),
+              padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 10.h),
+              child: (Text(
+                "开始计时",
+                style: state.totalSecond.value > 0 ? gr16 : g16,
+              )),
+            ).onTap(() {
+              if (state.totalSecond.value > 0) {
+                logic.startCountDown();
+              }
+            });
+          })
+        ],
       ),
     );
   }
@@ -85,7 +74,7 @@ class CountDownPage extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
+        SizedBox(
           height: 1.sw,
           width: 1.sw,
           child: LiquidCircularProgressIndicator(
@@ -95,14 +84,7 @@ class CountDownPage extends StatelessWidget {
             borderColor: c7BBD9C,
             borderWidth: 2.0,
             direction: Axis.vertical,
-            center: Text(
-              "${state.currentHour.value.toString().padLeft(2, '0')}:${state.currentMinute.value.toString().padLeft(2, '0')}:${state.currentSecond.value.toString().padLeft(2, '0')}",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 80.sp,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            center:  _buildTimeText(state),
           ),
         ),
         Container(
@@ -115,6 +97,51 @@ class CountDownPage extends StatelessWidget {
         ).onTap(() {
           logic.stopCountDown();
         })
+      ],
+    );
+  }
+
+  Widget _buildTimeText(CountDownState state) {
+    double fixedWidth = 50.w;
+    return RichText(
+      text: TextSpan(
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 70.w,
+          fontWeight: FontWeight.bold,
+        ),
+        children: [
+          _buildDigitSpan(state.currentHour.value ~/ 10, fixedWidth),
+          _buildDigitSpan(state.currentHour.value % 10, fixedWidth),
+          TextSpan(text: ':', style: TextStyle(fontSize: 70.w)),
+          _buildDigitSpan(state.currentMinute.value ~/ 10, fixedWidth),
+          _buildDigitSpan(state.currentMinute.value % 10, fixedWidth),
+          TextSpan(text: ':', style: TextStyle(fontSize: 70.w)),
+          _buildDigitSpan(state.currentSecond.value ~/ 10, fixedWidth),
+          _buildDigitSpan(state.currentSecond.value % 10, fixedWidth),
+        ],
+      ),
+    );
+  }
+
+  TextSpan _buildDigitSpan(int digit, double width) {
+    return TextSpan(
+      children: [
+        WidgetSpan(
+          alignment: PlaceholderAlignment.middle,
+          child: SizedBox(
+            width: width,
+            child: Text(
+              digit.toString(),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 70.w,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -132,7 +159,7 @@ class CountDownPage extends StatelessWidget {
         ),
       ),
       backgroundColor: cEAF5EF,
-      title: Container(
+      title: SizedBox(
         width: 1.sw,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -53,6 +53,7 @@ class CountDownLogic extends GetxController with GetTickerProviderStateMixin {
     state.currentHour.value = 0;
     state.currentMinute.value = 0;
     state.currentSecond.value = 0;
+    state.totalSecond.value = 0;
     // 禁用屏幕常亮
     WakelockPlus.disable();
   }

@@ -37,6 +37,7 @@ TextStyle g8lt =
 TextStyle g10 = TextStyle(color: Colors.grey, fontSize: 10.sp);
 TextStyle g12 = TextStyle(color: Colors.grey, fontSize: 12.sp);
 TextStyle g14 = TextStyle(color: Colors.grey, fontSize: 14.sp);
+TextStyle g16 = TextStyle(color: Colors.grey, fontSize: 16.sp);
 TextStyle g214 = TextStyle(color: cABB1BA, fontSize: 14.sp);
 TextStyle gr14 = TextStyle(color: c7BBD9C, fontSize: 14.sp);
 TextStyle gr16b = TextStyle(color: c7BBD9C, fontSize: 16.sp,fontWeight: FontWeight.bold);
