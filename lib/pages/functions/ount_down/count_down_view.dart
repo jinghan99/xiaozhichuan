@@ -16,12 +16,19 @@ class CountDownPage extends StatelessWidget {
         backgroundColor: cF5,
         appBar: buildAppBar(),
         body: Obx(() {
-          return state.isStart.value ? buildProgressIndicator(logic, state) : startButton(logic, state);
+          return AnimatedSwitcher(
+            duration: const Duration(milliseconds: 280),
+            transitionBuilder: (Widget child, Animation<double> animation) {
+              return ScaleTransition(scale: animation, child: child);//缩放动画
+            },
+            child: state.isStart.value ? buildProgressIndicator(logic, state) : startButton(logic, state),
+          );
         }));
   }
 
   Widget startButton(CountDownLogic logic, CountDownState state) {
     return Center(
+      key: const ValueKey('startButton'),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -72,6 +79,7 @@ class CountDownPage extends StatelessWidget {
   // 计时器
   Widget buildProgressIndicator(CountDownLogic logic, CountDownState state) {
     return Column(
+      key: const ValueKey('progressIndicator'),
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
@@ -84,7 +92,7 @@ class CountDownPage extends StatelessWidget {
             borderColor: c7BBD9C,
             borderWidth: 2.0,
             direction: Axis.vertical,
-            center:  _buildTimeText(state),
+            center: _buildTimeText(state),
           ),
         ),
         Container(
