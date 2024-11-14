@@ -101,7 +101,6 @@ class CountDownPage extends StatelessWidget {
                   color: Colors.white,
                   fontSize: 80.sp,
                   fontWeight: FontWeight.bold,
-                // foreground: Paint()..style = PaintingStyle.stroke..strokeWidth = 3..color =Colors.white,
                   ),
             ),
           ),
