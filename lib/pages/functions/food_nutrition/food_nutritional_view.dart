@@ -15,7 +15,7 @@ class FoodNutritionalPage extends StatelessWidget {
     final FoodNutritionalState state = Get.find<FoodNutritionalLogic>().state;
     return Scaffold(
       backgroundColor: cF5,
-      appBar: buildAppBar(state,logic),
+      appBar: buildAppBar(state, logic),
       body: Obx(() {
         if (state.isLoading.value) {
           return const Center(child: CupertinoActivityIndicator());
@@ -39,7 +39,7 @@ class FoodNutritionalPage extends StatelessWidget {
                         margin: EdgeInsets.only(top: 5.h),
                         padding: EdgeInsets.all(15.w),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: matchBackGroundColor(data.phe),
                         ),
                         child: Column(children: [
                           Row(
@@ -130,7 +130,7 @@ class FoodNutritionalPage extends StatelessWidget {
     );
   }
 
-  AppBar buildAppBar(FoodNutritionalState state,FoodNutritionalLogic logic) {
+  AppBar buildAppBar(FoodNutritionalState state, FoodNutritionalLogic logic) {
     return AppBar(
       leading: Container(
         padding: const EdgeInsets.only(left: 10),
@@ -149,14 +149,14 @@ class FoodNutritionalPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            search(state,logic),
+            search(state, logic),
           ],
         ),
       ),
     );
   }
 
-  Container search(FoodNutritionalState state,FoodNutritionalLogic logic) {
+  Container search(FoodNutritionalState state, FoodNutritionalLogic logic) {
     return Container(
       height: 35.h,
       margin: const EdgeInsets.symmetric(horizontal: 5),
@@ -178,7 +178,8 @@ class FoodNutritionalPage extends StatelessWidget {
             child: TextField(
               controller: state.searchController,
               cursorColor: Colors.grey,
-              textInputAction: TextInputAction.search, // 设置为搜索动作
+              textInputAction: TextInputAction.search,
+              // 设置为搜索动作
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: '搜索食物',
@@ -209,5 +210,19 @@ class FoodNutritionalPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  // 匹配背景颜色
+  Color matchBackGroundColor(double? value) {
+    if (value == null) {
+      return Colors.white;
+    }
+    if (value < 100) {
+      return Colors.green.shade50;
+    }
+    if (value > 100 && value < 249) {
+      return Colors.yellow.shade50;
+    }
+    return Colors.red.shade100;
   }
 }
