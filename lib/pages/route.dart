@@ -3,6 +3,8 @@ import 'package:flutter_scaffold/pages/root/root_view.dart';
 import 'package:get/get.dart';
 import 'category/category_binding.dart';
 import 'category/category_view.dart';
+import 'functions/food_nutrition/food_nutritional_binding.dart';
+import 'functions/food_nutrition/food_nutritional_view.dart';
 import 'functions/gobang/gobang_binding.dart';
 import 'functions/gobang/gobang_view.dart';
 import 'functions/handheld_barrage/handheld_barrage_binding.dart';
@@ -27,6 +29,7 @@ const String handheldBarrage = '/handheldBarrage'; //手持弹幕
 const String timeScreen = '/timeScreen'; //时间屏幕
 const String gobang = '/gobang'; //五子棋
 const String countDown = '/countDown'; //倒计时
+const String foodNutritional = '/foodNutritional'; //倒计时
 
 List<GetPage> routePage = [
   GetPage(name: loading, page: () => const LoadingPage(), binding: LoadingBinding()),
@@ -38,4 +41,5 @@ List<GetPage> routePage = [
   GetPage(name: timeScreen, page: () => const TimeScreenPage(), binding: TimeScreenBinding()),
   GetPage(name: gobang, page: () => const GoBangPage(), binding: GoBangBinding()),
   GetPage(name: countDown, page: () => const CountDownPage(), binding: CountDownBinding()),
+  GetPage(name: foodNutritional, page: () => const FoodNutritionalPage(), binding: FoodNutritionalBinding()),
 ];

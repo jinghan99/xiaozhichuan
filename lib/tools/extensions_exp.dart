@@ -55,3 +55,8 @@ AppBar buildAppBar(
     ),
   );
 }
+
+hideKeyboard() {
+  FocusManager.instance.primaryFocus?.unfocus();
+}
+
