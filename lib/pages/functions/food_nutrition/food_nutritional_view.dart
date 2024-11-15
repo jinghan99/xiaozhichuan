@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_scaffold/db/entity/FoodNutritionEntity.dart';
 import 'package:flutter_scaffold/tools/extensions_exp.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -14,94 +15,122 @@ class FoodNutritionalPage extends StatelessWidget {
     final FoodNutritionalState state = Get.find<FoodNutritionalLogic>().state;
     return Scaffold(
       backgroundColor: cF5,
-      appBar: buildAppBar(state),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: 30,
-              padding: EdgeInsets.symmetric(horizontal: 5.w),
-              itemBuilder: (c, index) {
-                return Container(
-                  margin: EdgeInsets.only(top: 5.h),
-                  padding: EdgeInsets.all(15.w),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
+      appBar: buildAppBar(state,logic),
+      body: Obx(() {
+        if (state.isLoading.value) {
+          return const Center(child: CupertinoActivityIndicator());
+        }
+        return Column(
+          children: [
+            Expanded(
+              child: Obx(() {
+                state.data;
+                return SmartRefresher(
+                  controller: state.controller,
+                  onLoading: logic.onLoading,
+                  onRefresh: logic.onRefresh,
+                  enablePullUp: true,
+                  child: ListView.builder(
+                    itemCount: state.data.length,
+                    padding: EdgeInsets.symmetric(horizontal: 5.w),
+                    itemBuilder: (c, index) {
+                      FoodNutritionEntity data = state.data[index];
+                      return Container(
+                        margin: EdgeInsets.only(top: 5.h),
+                        padding: EdgeInsets.all(15.w),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        child: Column(children: [
+                          Row(
+                            children: [
+                              Text(
+                                "${data.name}" + " 100g",
+                                style: gr16b,
+                              ),
+                            ],
+                          ).marginOnly(bottom: 8.h),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "蛋白质(g)",
+                                style: b14,
+                              ),
+                              Text(
+                                "${data.proteinG}",
+                                style: b14,
+                              ),
+                            ],
+                          ).marginOnly(bottom: 5.h),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "phe(mg)",
+                                style: b14,
+                              ),
+                              Text(
+                                "${data.phe}",
+                                style: b14,
+                              ),
+                            ],
+                          ).marginOnly(bottom: 5.h),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "热量(kj)",
+                                style: b14,
+                              ),
+                              Text(
+                                "${data.energyKj}",
+                                style: b14,
+                              ),
+                            ],
+                          ).marginOnly(bottom: 5.h),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "碳水化合物(CHO)(g)",
+                                style: b14,
+                              ),
+                              Text(
+                                "${data.choG}",
+                                style: b14,
+                              ),
+                            ],
+                          ).marginOnly(bottom: 5.h),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "脂肪(Fat)(g)",
+                                style: b14,
+                              ),
+                              Text(
+                                "${data.fatG}",
+                                style: b14,
+                              ),
+                            ],
+                          ).marginOnly(bottom: 5.h),
+                        ]),
+                      ).onTap(() {
+                        hideKeyboard();
+                      });
+                    },
                   ),
-                  child: Column(children: [
-                    Row(
-                      children: [
-                        Text(
-                          "面条" + " 100g",
-                          style: gr14,
-                        ),
-                      ],
-                    ).marginOnly(bottom: 8.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "蛋白质(g)",
-                          style: gr14,
-                        ),
-                        Text(
-                          "10.4",
-                          style: gr14,
-                        ),
-                      ],
-                    ).marginOnly(bottom: 5.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "热量(kj)",
-                          style: gr14,
-                        ),
-                        Text(
-                          "10.4",
-                          style: gr14,
-                        ),
-                      ],
-                    ).marginOnly(bottom: 5.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "碳水化合物(CHO)(g)",
-                          style: gr14,
-                        ),
-                        Text(
-                          "10.4",
-                          style: gr14,
-                        ),
-                      ],
-                    ).marginOnly(bottom: 5.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "脂肪(Fat)(g)",
-                          style: gr14,
-                        ),
-                        Text(
-                          "10.4",
-                          style: gr14,
-                        ),
-                      ],
-                    ).marginOnly(bottom: 5.h),
-                  ]),
-                ).onTap(() {
-                  hideKeyboard();
-                });
-              },
+                );
+              }),
             ),
-          ),
-        ],
-      ),
+          ],
+        );
+      }),
     );
   }
 
-  AppBar buildAppBar(FoodNutritionalState state) {
+  AppBar buildAppBar(FoodNutritionalState state,FoodNutritionalLogic logic) {
     return AppBar(
       leading: Container(
         padding: const EdgeInsets.only(left: 10),
@@ -120,14 +149,14 @@ class FoodNutritionalPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            search(state),
+            search(state,logic),
           ],
         ),
       ),
     );
   }
 
-  Container search(FoodNutritionalState state) {
+  Container search(FoodNutritionalState state,FoodNutritionalLogic logic) {
     return Container(
       height: 35.h,
       margin: const EdgeInsets.symmetric(horizontal: 5),
@@ -149,6 +178,7 @@ class FoodNutritionalPage extends StatelessWidget {
             child: TextField(
               controller: state.searchController,
               cursorColor: Colors.grey,
+              textInputAction: TextInputAction.search, // 设置为搜索动作
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: '搜索食物',
@@ -159,12 +189,17 @@ class FoodNutritionalPage extends StatelessWidget {
                 ),
               ),
               style: TextStyle(color: c9C, fontSize: 12.sp),
+              onSubmitted: (value) {
+                hideKeyboard();
+                state.controller.requestRefresh();
+              },
             ).marginSymmetric(horizontal: 5.w),
           ),
           Container(height: 20.w, width: 0.5, color: c9C, margin: EdgeInsets.symmetric(horizontal: 6.w)),
           TextButton(
             onPressed: () {
               hideKeyboard();
+              state.controller.requestRefresh();
             },
             child: const Text(
               '搜索',
