@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_scaffold/db/entity/FoodNutritionEntity.dart';
 import 'package:flutter_scaffold/tools/extensions_exp.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'food_nutritional_logic.dart';
@@ -30,91 +31,118 @@ class FoodNutritionalPage extends StatelessWidget {
                   onLoading: logic.onLoading,
                   onRefresh: logic.onRefresh,
                   enablePullUp: true,
-                  child: ListView.builder(
+                  child: MasonryGridView.count(
+                    padding: EdgeInsets.all(10.w),
+                    crossAxisCount: 2,
+                    // 两列
+                    mainAxisSpacing: 8,
+                    // 主轴方向间距
+                    crossAxisSpacing: 8,
+                    // 交叉轴方向间距
                     itemCount: state.data.length,
-                    padding: EdgeInsets.symmetric(horizontal: 5.w),
                     itemBuilder: (c, index) {
                       FoodNutritionEntity data = state.data[index];
                       return Container(
-                        margin: EdgeInsets.only(top: 5.h),
-                        padding: EdgeInsets.all(15.w),
                         decoration: BoxDecoration(
-                          color: matchBackGroundColor(data.phe),
+                          gradient: matchGradient(data.phe),
+                          borderRadius: BorderRadius.circular(5.w),
                         ),
+                        padding: EdgeInsets.all(1.w),
                         child: Column(children: [
-                          Row(
-                            children: [
-                              Text(
-                                "${data.name}" + " 100g",
-                                style: gr16b,
+                          Container(
+                            padding: EdgeInsets.all(5.w),
+                            margin: EdgeInsets.only(top: 5.h),
+                            alignment: Alignment.centerLeft,
+                            child: Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: "${data.name}",
+                                    style: b14b, // 修改为 14
+                                  ),
+                                  TextSpan(
+                                    text: " 100g",
+                                    style: b12b, // 修改为 12
+                                  ),
+                                ],
                               ),
-                            ],
-                          ).marginOnly(bottom: 8.h),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "蛋白质(g)",
-                                style: b14,
-                              ),
-                              Text(
-                                "${data.proteinG}",
-                                style: b14,
-                              ),
-                            ],
-                          ).marginOnly(bottom: 5.h),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "phe(mg)",
-                                style: b14,
-                              ),
-                              Text(
-                                "${data.phe}",
-                                style: b14,
-                              ),
-                            ],
-                          ).marginOnly(bottom: 5.h),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "热量(kj)",
-                                style: b14,
-                              ),
-                              Text(
-                                "${data.energyKj}",
-                                style: b14,
-                              ),
-                            ],
-                          ).marginOnly(bottom: 5.h),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "碳水化合物(CHO)(g)",
-                                style: b14,
-                              ),
-                              Text(
-                                "${data.choG}",
-                                style: b14,
-                              ),
-                            ],
-                          ).marginOnly(bottom: 5.h),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "脂肪(Fat)(g)",
-                                style: b14,
-                              ),
-                              Text(
-                                "${data.fatG}",
-                                style: b14,
-                              ),
-                            ],
-                          ).marginOnly(bottom: 5.h),
+                              overflow: TextOverflow.clip,
+                              maxLines: 2,
+                            ),
+                          ).marginOnly(bottom: 2.h),
+                          Container(
+                            padding: EdgeInsets.all(5.w),
+                            child: Column(
+                              children: [
+
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "热量(kj)",
+                                      style: b14,
+                                    ),
+                                    Text(
+                                      "${data.energyKj}",
+                                      style: b14,
+                                    ),
+                                  ],
+                                ).marginOnly(bottom: 5.h),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "碳水(g)",
+                                      style: b14,
+                                    ),
+                                    Text(
+                                      "${data.choG}",
+                                      style: b14,
+                                    ),
+                                  ],
+                                ).marginOnly(bottom: 5.h),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "蛋白质(g)",
+                                      style: b14,
+                                    ),
+                                    Text(
+                                      "${data.proteinG}",
+                                      style: b14,
+                                    ),
+                                  ],
+                                ).marginOnly(bottom: 5.h),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "phe(mg)",
+                                      style: b14,
+                                    ),
+                                    Text(
+                                      "${data.phe}",
+                                      style: b14,
+                                    ),
+                                  ],
+                                ).marginOnly(bottom: 5.h),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "脂肪(Fat)(g)",
+                                      style: b14,
+                                    ),
+                                    Text(
+                                      "${data.fatG}",
+                                      style: b14,
+                                    ),
+                                  ],
+                                ).marginOnly(bottom: 5.h),
+                              ],
+                            ),
+                          ),
                         ]),
                       ).onTap(() {
                         hideKeyboard();
@@ -213,16 +241,57 @@ class FoodNutritionalPage extends StatelessWidget {
   }
 
   // 匹配背景颜色
-  Color matchBackGroundColor(double? value) {
+  LinearGradient matchGradient(double? value) {
     if (value == null) {
-      return Colors.white;
+      return const LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          Colors.white,
+          Color(0xFFaccbee), // #accbee
+        ],
+      );
     }
+
     if (value < 100) {
-      return Colors.green.shade50;
+      return const LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          Colors.white,
+          Color(0xFF7CA884), // #dad4ec
+        ],
+        stops: [
+          0.2, // 白色开始
+          0.99, // 粉色从 80% 的位置开始
+        ],
+      );
     }
     if (value > 100 && value < 249) {
-      return Colors.yellow.shade50;
+      return const LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          Colors.white,
+          Color(0xFFF0CC89), // #dad4ec
+        ],
+        stops: [
+          0.2, // 白色开始
+          0.99, // 粉色从 80% 的位置开始
+        ],
+      );
     }
-    return Colors.red.shade100;
+    return const LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [
+        Colors.white,
+        Color(0xFFF5BBCA), // #bfd9fe
+      ],
+      stops: [
+        0.2, // 白色开始
+        0.99, // 粉色从 80% 的位置开始
+      ],
+    );
   }
 }

@@ -55,6 +55,7 @@ class FoodNutritionService {
       'food_nutrition',
       where: where,
       whereArgs: whereArgs,
+      orderBy: 'protein_g ASC', // 按 proteinG 升序排序
       limit: pageSize,
       offset: offset,
     );
