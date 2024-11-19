@@ -10,7 +10,7 @@ class AppCategories {
       {'name': '记分牌', 'route': '/scoreCard'},
     ],
     '食物百科': [
-      {'name': '营养成分', 'route': '/foodNutritional'},
+      {'name': '营养成份', 'route': '/foodNutritional'},
     ],
     '休闲娱乐': [
       {'name': '五子棋', 'route': '/gobang'},

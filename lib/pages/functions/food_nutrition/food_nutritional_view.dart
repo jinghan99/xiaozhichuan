@@ -130,7 +130,7 @@ class FoodNutritionalPage extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      "脂肪(Fat)(g)",
+                                      "脂肪(g)",
                                       style: b14,
                                     ),
                                     Text(
