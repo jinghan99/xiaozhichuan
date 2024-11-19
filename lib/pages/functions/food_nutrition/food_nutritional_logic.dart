@@ -4,6 +4,7 @@ import 'package:flutter_scaffold/db/service/food_nutrition_service.dart';
 import 'package:flutter_scaffold/http/my_dio.dart';
 import 'package:get/get.dart';
 import 'food_nutritional_state.dart';
+import 'info/food_info_view.dart';
 
 class FoodNutritionalLogic extends GetxController with GetTickerProviderStateMixin {
   final FoodNutritionalState state = FoodNutritionalState();
@@ -47,6 +48,11 @@ class FoodNutritionalLogic extends GetxController with GetTickerProviderStateMix
     }).catchError((error) {
       logger.e('Error: $error');
     });
+  }
+
+  // 跳转详情页
+  void toInfo(FoodNutritionEntity food) {
+    Get.to(FoodInfoPage(), arguments: food);
   }
 
   @override

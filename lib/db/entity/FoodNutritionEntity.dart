@@ -182,4 +182,52 @@ class FoodNutritionEntity {
       'remark': remark,
     };
   }
+
+  // 将对象转换为 Map<String, dynamic>
+  Map<String, dynamic> toMap() {
+    return {
+      'ID': id,
+      '名称': name,
+      '食部': edible,
+      '水分(g)': waterG,
+      '能量(KJ)': energyKj,
+      '能量(Kcal)': energyKcal,
+      '蛋白质(g)': proteinG,
+      '苯丙氨酸(mg)': phe,
+      '脂肪(g)': fatG,
+      '胆固醇(mg)': cholesterolMg,
+      '灰分(g)': ashG,
+      '碳水化合物(g)': choG,
+      '膳食纤维(g)': dietaryFiberG,
+      '胡萝卜素(μg)': caroteneUg,
+      'α-TE': alphaTe,
+      '硫胺素(mg)': thiaminMg,
+      '核黄素(mg)': riboflavinMg,
+      '烟酸(mg)': niacinMg,
+      '维生素A(μg)': vitaminA,
+      '维生素C(mg)': vitaminC,
+      '维生素E1': vitaminE1,
+      '维生素E2': vitaminE2,
+      '维生素E3': vitaminE3,
+      '维生素E总量': vitaminETotal,
+      '钙(mg)': caMg,
+      '磷(mg)': pMg,
+      '钾(mg)': kMg,
+      '钠(mg)': naMg,
+      '镁(mg)': mgMg,
+      '铁(mg)': feMg,
+      '锌(mg)': znMg,
+      '硒(μg)': seUg,
+      '铜(mg)': cuMg,
+      '锰(mg)': mnMg,
+      '碘(I)': iodine,
+      '饱和脂肪酸(SFA)': sfa,
+      '单不饱和脂肪酸(MUFA)': mufa,
+      '多不饱和脂肪酸(PUFA)': pufa,
+      '合计': total,
+      '视黄醇': retinol,
+      '食物代码': foodCode,
+      '备注': remark,
+    };
+  }
 }

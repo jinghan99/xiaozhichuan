@@ -146,6 +146,7 @@ class FoodNutritionalPage extends StatelessWidget {
                         ]),
                       ).onTap(() {
                         hideKeyboard();
+                        logic.toInfo(data);
                       });
                     },
                   ),
