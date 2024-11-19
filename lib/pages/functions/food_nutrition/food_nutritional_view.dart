@@ -259,7 +259,7 @@ class FoodNutritionalPage extends StatelessWidget {
         end: Alignment.bottomCenter,
         colors: [
           Colors.white,
-          Color(0xFF7CA884), // #dad4ec
+           Color(0xB37BBD9C), // #dad4ec
         ],
         stops: [
           0.2, // 白色开始
@@ -273,7 +273,7 @@ class FoodNutritionalPage extends StatelessWidget {
         end: Alignment.bottomCenter,
         colors: [
           Colors.white,
-          Color(0xFFF0CC89), // #dad4ec
+          Color(0xFFE3E0AE), // #dad4ec
         ],
         stops: [
           0.2, // 白色开始
@@ -286,7 +286,7 @@ class FoodNutritionalPage extends StatelessWidget {
       end: Alignment.bottomCenter,
       colors: [
         Colors.white,
-        Color(0xFFF5BBCA), // #bfd9fe
+        Color(0xFFFFC9CF), // #bfd9fe
       ],
       stops: [
         0.2, // 白色开始

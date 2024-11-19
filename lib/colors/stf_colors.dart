@@ -25,6 +25,7 @@ Color cEAF5EF =const Color(0xffEAF5EF);
 
 // 小纸船 theme_color
 Color c7BBD9C =const Color(0xff7BBD9C);
+Color c37BBD9C =const Color(0xB37BBD9C);
 
 // 小纸船 background_color
 Color cE5F2EB =const Color(0xffe5f2eb);
