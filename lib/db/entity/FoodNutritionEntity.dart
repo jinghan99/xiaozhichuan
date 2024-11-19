@@ -186,7 +186,6 @@ class FoodNutritionEntity {
   // 将对象转换为 Map<String, dynamic>
   Map<String, dynamic> toMap() {
     return {
-      'ID': id,
       '名称': name,
       '食部': edible,
       '水分(g)': waterG,

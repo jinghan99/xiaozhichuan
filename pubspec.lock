@@ -57,6 +57,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.8"
+  data_table_2:
+    dependency: "direct main"
+    description:
+      name: data_table_2
+      sha256: f02ec9b24f44420816a87370ff4f4e533e15b274f6267e4c9a88a585ad1a0473
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.5.15"
   dbus:
     dependency: transitive
     description:
@@ -155,6 +163,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "5.2.1"
+  flutter_staggered_grid_view:
+    dependency: "direct main"
+    description:
+      name: flutter_staggered_grid_view
+      sha256: "19e7abb550c96fbfeb546b23f3ff356ee7c59a019a651f8f102a4ba9b7349395"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.7.0"
   flutter_svg:
     dependency: "direct main"
     description:

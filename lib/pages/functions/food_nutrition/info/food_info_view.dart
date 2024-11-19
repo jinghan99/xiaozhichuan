@@ -60,7 +60,7 @@ class FoodInfoPage extends StatelessWidget {
     return mapData.entries.map((entry) {
       return DataRow(cells: [
         DataCell(Text(entry.key)), // 显示键（中文字段名）
-        DataCell(Text(entry.value?.toString() ?? 'null')), // 若为 null，则显示为 "null"
+        DataCell(Text(entry.value?.toString() ?? '-')), // 若为 null，则显示为 "null"
       ]);
     }).toList();
   }

@@ -74,7 +74,6 @@ class FoodNutritionalPage extends StatelessWidget {
                             padding: EdgeInsets.all(5.w),
                             child: Column(
                               children: [
-
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
@@ -96,7 +95,7 @@ class FoodNutritionalPage extends StatelessWidget {
                                       style: b14,
                                     ),
                                     Text(
-                                      "${data.choG}",
+                                      data.choG?.toString() ?? '-',
                                       style: b14,
                                     ),
                                   ],
@@ -135,7 +134,7 @@ class FoodNutritionalPage extends StatelessWidget {
                                       style: b14,
                                     ),
                                     Text(
-                                      "${data.fatG}",
+                                      data.fatG?.toString() ?? '-',
                                       style: b14,
                                     ),
                                   ],
@@ -260,7 +259,7 @@ class FoodNutritionalPage extends StatelessWidget {
         end: Alignment.bottomCenter,
         colors: [
           Colors.white,
-           Color(0xB37BBD9C), // #dad4ec
+          Color(0xB37BBD9C), // #dad4ec
         ],
         stops: [
           0.2, // 白色开始
@@ -268,7 +267,7 @@ class FoodNutritionalPage extends StatelessWidget {
         ],
       );
     }
-    if (value > 100 && value < 249) {
+    if (value < 249) {
       return const LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
@@ -282,12 +281,27 @@ class FoodNutritionalPage extends StatelessWidget {
         ],
       );
     }
+
+    if (value < 500) {
+      return const LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          Colors.white,
+          Color(0xFFFFC9CF), // #bfd9fe
+        ],
+        stops: [
+          0.2, // 白色开始
+          0.99, // 粉色从 80% 的位置开始
+        ],
+      );
+    }
     return const LinearGradient(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
       colors: [
         Colors.white,
-        Color(0xFFFFC9CF), // #bfd9fe
+        Colors.red, // #bfd9fe
       ],
       stops: [
         0.2, // 白色开始
