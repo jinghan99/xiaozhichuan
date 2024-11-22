@@ -24,7 +24,8 @@ class HotPage extends StatelessWidget {
                 controller: state.controller,
                 onLoading: logic.onLoading,
                 onRefresh: logic.onRefresh,
-                enablePullUp: true,
+                enablePullDown: true,
+                enablePullUp: false,
                 child: TabBarView(
                   controller: logic.tabController,
                   children: state.tabContents.map((itemList) {
@@ -57,7 +58,7 @@ class HotPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "热搜",
+              "热榜",
               style: gr16b,
             ).paddingOnly(bottom: 8),
             Text(
@@ -110,21 +111,20 @@ class HotPage extends StatelessWidget {
   }
 
   Widget _buildItem(Item item) {
-    return InkWell(
-      onTap: () {
-        Get.toNamed('/search', arguments: {'searchText': item.title});
-      },
-      child: Container(
-        margin: const EdgeInsets.fromLTRB(0, 0, 0, 5),
-        height: 130,
+    return Container(
+       padding: const EdgeInsets.all(5),
+        height: 140,
         child: Row(
           children: [
-            Expanded(flex: 3, child: ImgUtils.buildImg(item.src!, item.ranking!)),
+            Container(
+              width: 95,
+              child: ImgUtils.buildImg(item.src!, item.ranking!),
+            ),
             Expanded(
                 flex: 8,
                 child: Container(
                   padding: const EdgeInsets.fromLTRB(0, 5, 0, 14),
-                  margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                  margin: const EdgeInsets.only(left: 8),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -133,7 +133,7 @@ class HotPage extends StatelessWidget {
                         children: [
                           Text(
                             _truncateText(item.title!, 10),
-                            style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color.fromRGBO(25, 35, 56, 1.000)),
+                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color.fromRGBO(25, 35, 56, 1.000)),
                             maxLines: 1, // 限制为单行
                           ),
                           Text(
@@ -146,15 +146,14 @@ class HotPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 7),
                       Text(
                         "${item.pubDate!.split(' ')[0]} / ${item.area!} / ${item.category!}",
-                        style: const TextStyle(color: Color.fromRGBO(92, 102, 120, 1), fontSize: 14, fontWeight: FontWeight.bold),
-                      ),
+                        style: const TextStyle(color: Color.fromRGBO(92, 102, 120, 1), fontSize: 14),
+                      ).marginSymmetric(vertical: 8),
                       const SizedBox(height: 7),
                       Text(
                         item.actors!,
-                        style: const TextStyle(color: Color.fromRGBO(45, 56, 78, 1), fontSize: 13, fontWeight: FontWeight.bold),
+                        style: const TextStyle(color: Color.fromRGBO(45, 56, 78, 1), fontSize: 12),
                         overflow: TextOverflow.ellipsis, // 当文本溢出时显示省略号
                         maxLines: 1, // 限制为单行
                       ),
@@ -163,8 +162,7 @@ class HotPage extends StatelessWidget {
                 )),
           ],
         ),
-      ),
-    );
+      );
   }
 
   String _truncateText(String text, int maxLength) {

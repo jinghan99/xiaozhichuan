@@ -27,22 +27,21 @@ class HotLogic extends GetxController with GetSingleTickerProviderStateMixin {
         onTabChanged(tabController!.index);
       }
     });
-
   }
 
   void onTabChanged(int index) {
     state.selectedIndex.value = index;
-     if (state.tabContents[state.selectedIndex.value]!.isNotEmpty) {
+    if (state.tabContents[state.selectedIndex.value] != null && state.tabContents[state.selectedIndex.value]!.isNotEmpty) {
       return;
     }
     initLoading(index); // 切换Tab时加载内容
   }
 
-  void onRefresh() async {
+  void onRefresh() {
     initLoading(state.selectedIndex.value);
   }
 
-  void onLoading() async {
+  void onLoading() {
     if (state.tabContents[state.selectedIndex.value]!.isNotEmpty) {
       state.controller
         ..refreshCompleted()

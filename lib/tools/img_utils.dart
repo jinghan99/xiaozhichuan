@@ -1,15 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_scaffold/http/my_dio.dart';
 
 abstract final class ImgUtils {
 // 构建图片
   static Widget buildImg(String imgUrl, String? rangk) {
     return Container(
-      margin: const EdgeInsets.all(5),
+     margin: const EdgeInsets.symmetric(vertical: 5,horizontal: 5),
       child: Stack(
         children: [
           Container(
             width: double.infinity,
+            height: double.infinity,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.0), // 设置圆角半径
             ),
@@ -20,7 +23,7 @@ abstract final class ImgUtils {
               alignment: Alignment.center,
               placeholder: (context, url) => const Center(
                 //加载效果
-                child: CircularProgressIndicator(),
+                child: CupertinoActivityIndicator(),
               ),
               errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
