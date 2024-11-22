@@ -36,7 +36,7 @@ class HotPage extends StatelessWidget {
                       itemCount: itemList.length,
                       itemBuilder: (context, index) {
                         var item = itemList[index];
-                        return _buildItem(item);
+                        return _buildItem(item,logic);
                       },
                     );
                   }).toList(),
@@ -110,7 +110,7 @@ class HotPage extends StatelessWidget {
     );
   }
 
-  Widget _buildItem(Item item) {
+  Widget _buildItem(Item item, HotLogic logic) {
     return Container(
        padding: const EdgeInsets.all(5),
         height: 140,
@@ -162,7 +162,9 @@ class HotPage extends StatelessWidget {
                 )),
           ],
         ),
-      );
+      ).onTap((){
+        logic.toPlay(item);
+    });
   }
 
   String _truncateText(String text, int maxLength) {

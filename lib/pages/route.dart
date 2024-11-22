@@ -17,6 +17,8 @@ import 'home/home_binding.dart';
 import 'home/home_view.dart';
 import 'hot/hot_binding.dart';
 import 'hot/hot_view.dart';
+import 'hot/play/play_binding.dart';
+import 'hot/play/play_view.dart';
 import 'line/line_binding.dart';
 import 'line/line_view.dart';
 import 'loading/loading_binding.dart';
@@ -26,6 +28,7 @@ const String loading = '/'; //loading页
 const String root = '/root'; //index页
 const String home = '/home'; //index页
 const String hot = '/hot'; //hot页
+const String play = '/play'; //播放页
 const String category = '/category'; //category
 const String line = '/line'; //category
 const String handheldBarrage = '/handheldBarrage'; //手持弹幕
@@ -46,4 +49,6 @@ List<GetPage> routePage = [
   GetPage(name: gobang, page: () => const GoBangPage(), binding: GoBangBinding()),
   GetPage(name: countDown, page: () => const CountDownPage(), binding: CountDownBinding()),
   GetPage(name: foodNutritional, page: () => const FoodNutritionalPage(), binding: FoodNutritionalBinding()),
+  GetPage(name: play, page: () => const PlayPage(), binding: PlayBinding()),
+
 ];

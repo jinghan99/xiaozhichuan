@@ -3,6 +3,7 @@ import 'package:flutter_scaffold/http/request.dart';
 import 'package:get/get.dart';
 
 import '../../tools/extensions_exp.dart';
+import '../route.dart';
 import 'hot_state.dart';
 
 class HotLogic extends GetxController with GetSingleTickerProviderStateMixin {
@@ -49,6 +50,11 @@ class HotLogic extends GetxController with GetSingleTickerProviderStateMixin {
       return;
     }
     initLoading(state.selectedIndex.value);
+  }
+
+  void toPlay(Item item) {
+    // 组装视频页参数
+    Get.toNamed(play,arguments: item);
   }
 
   initLoading(int index) {
