@@ -188,8 +188,8 @@ class TimeScreenLogic extends GetxController with GetTickerProviderStateMixin {
   @override
   void onClose() {
     // 禁用屏幕常亮
-    WakelockPlus.disable();
     _secondTimer?.cancel(); // 取消计时器
+    WakelockPlus.disable();
     secondAnimationController.dispose();
     minuteAnimationController.dispose();
     hourAnimationController.dispose();

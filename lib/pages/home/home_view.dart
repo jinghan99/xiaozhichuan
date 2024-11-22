@@ -19,9 +19,9 @@ class HomePage extends StatelessWidget {
               height: 5.w,
             );
           },
-          itemCount: AppCategories.categories.length,
+          itemCount: AppConstants.categories.length,
           itemBuilder: (context, index) {
-            final category = AppCategories.categories.entries.elementAt(index);
+            final category = AppConstants.categories.entries.elementAt(index);
             final categoryName = category.key;
             final appList = category.value;
             return Container(

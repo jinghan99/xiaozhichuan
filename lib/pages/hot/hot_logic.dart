@@ -24,7 +24,6 @@ class HotLogic extends GetxController with GetSingleTickerProviderStateMixin {
     tabController?.addListener(() {
       ///避免addListener调用2次
       if (tabController?.index == tabController?.animation?.value) {
-        logger.i("点击了下标为${tabController?.index}的tab");
         onTabChanged(tabController!.index);
       }
     });
@@ -59,7 +58,6 @@ class HotLogic extends GetxController with GetSingleTickerProviderStateMixin {
 
   initLoading(int index) {
     EasyLoading.show();
-    logger.i("加载下标为${tabController?.index}的tab");
     String channel = state.tabs[index];
     yingshiRanking({
       'area': '全部',
