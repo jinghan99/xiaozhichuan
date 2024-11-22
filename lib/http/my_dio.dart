@@ -1,9 +1,7 @@
-
 import 'package:dio/dio.dart' as d;
 export 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:logger/logger.dart';
 import '../tools/extensions_exp.dart';
-
 
 //http请求成功回调
 typedef SCallBack<T> = void Function(d.Response response, bool hasError);
@@ -12,10 +10,11 @@ typedef SCallBack<T> = void Function(d.Response response, bool hasError);
 typedef FCallBack = void Function(d.DioException error);
 
 final logger = Logger(
-    printer: PrettyPrinter(
-      printEmojis: false,
-    ),
-    level: Level.debug);
+  printer: PrettyPrinter(
+    printEmojis: false,
+  ),
+  level: Level.debug,
+);
 
 class MyDio {
   MyDio._internal();
@@ -28,7 +27,8 @@ class MyDio {
 
   initDio() {
     var headers = {
-      'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Mobile Safari/537.36'
+      'user-agent':
+          'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Mobile Safari/537.36'
     };
     d.BaseOptions options = d.BaseOptions(
       headers: headers,
@@ -48,82 +48,63 @@ class MyDio {
   requestDio(String way, String url, data, SCallBack sCallBack, FCallBack fCallBack,
       {bool needToken = true, bool showLog = false, d.CancelToken? cancelToken}) async {
     await ask(way, url, data, sCallBack, fCallBack, needToken: needToken, showLog: showLog, cancelToken: cancelToken);
-
   }
 
   post(String url, data, SCallBack sCallBack, FCallBack fCallBack,
       {bool needToken = true, bool showLog = false, d.CancelToken? cancelToken}) async {
-    // DateTime ntpNow = DateTime.now();
-    // Map<String, dynamic> dd = {'client_id': getRandomString(2) + ntpNow.millisecondsSinceEpoch.toString()};
-    // if (data.values.isNotEmpty) {
-    //   dd.addAll(data);
-    // }
-    // String s = amapMM(data);
-    // String rs = '';
-    // Map<String, dynamic> queryParameters = {};
-    // if (needToken) {
-    //   queryParameters['token'] = MyCookie().token.value;
-    // }
     try {
       if (showLog) {
-        logger.d('POST\n${ url}\n$data');
+        logger.d('POST\n${url}\n$data');
       }
 
-      d.Response re = await dio!.post(url, data: data, cancelToken: cancelToken);
-      if (re.data is String) {
-
-
-      }
+      d.Response resp = await dio!.post(url, data: data, cancelToken: cancelToken);
+      if (resp.data is String) {}
       if (showLog) {
-        logger.d('POST\n${ url}\n$data');
-        logger.d(re.data);
+        logger.d('POST\n${url}\n$data');
+        logger.d(resp.data);
       }
-      {}
+      sCallBack(resp, false);
     } on d.DioException catch (e) {
       showDioE(e, fCallBack, url: url);
     }
   }
 
   put(String url, data, SCallBack sCallBack, FCallBack fCallBack, {bool needToken = true, bool showLog = false}) async {
-
     try {
       if (showLog) {
-        logger.d('POST\n${ url}\n$data');
+        logger.d('POST\n${url}\n$data');
       }
-      d.Response re;
-
-      re = await dio!.put(url, data: data);
-
+      d.Response resp;
+      resp = await dio!.put(url, data: data);
       if (showLog) {
-        logger.d('POST\n${ url}\n$data');
-        logger.d(re.data);
+        logger.d('POST\n${url}\n$data');
+        logger.d(resp.data);
       }
-      {}
+      sCallBack(resp, false);
     } on d.DioException catch (e) {
       showDioE(e, fCallBack);
     }
   }
 
   get(String url, data, SCallBack sCallBack, FCallBack fCallBack,
-      {bool needToken = true, bool showLog = false, d.CancelToken? cancelToken}) async {
+      {bool needToken = true, bool showLog = true, d.CancelToken? cancelToken}) async {
     // DateTime ntpNow = DateTime.now();
     String rs = '';
     if (showLog) {
-      logger.d('GET\n${  url}\n$data');
+      logger.d('GET\n${url}\n$data');
     }
     try {
-      d.Response re;
+      d.Response resp;
       // String s = amapMM({'sKey': aMapIoSKey, 'time': ntpNow.millisecondsSinceEpoch});
       if (data == null) {
-        re = await dio!.get(url, cancelToken: cancelToken);
+        resp = await dio!.get(url, cancelToken: cancelToken);
       } else {
-        re = await dio!.get(url, queryParameters: data!, cancelToken: cancelToken);
+        resp = await dio!.get(url, queryParameters: data!, cancelToken: cancelToken);
       }
-
       if (showLog) {
-        logger.d('GET\n${url}\n$data\n$rs\n${re.data.toString()}');
+        logger.d('GET\n${url}\n$data\n$rs\n${resp.data.toString()}');
       }
-       {}
+      sCallBack(resp, false);
     } on d.DioException catch (e) {
       showDioE(e, fCallBack, url: url);
     }
