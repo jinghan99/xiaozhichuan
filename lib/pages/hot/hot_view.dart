@@ -116,7 +116,7 @@ class HotPage extends StatelessWidget {
         height: 140,
         child: Row(
           children: [
-            Container(
+            SizedBox(
               width: 95,
               child: ImgUtils.buildImg(item.src!, item.ranking!),
             ),
