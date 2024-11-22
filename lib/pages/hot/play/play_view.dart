@@ -19,21 +19,13 @@ class PlayPage extends StatelessWidget {
             AspectRatio(
               aspectRatio: 16 / 9,
               child: Obx(() {
-                if (state.selectedEpisodeUrl.value.isEmpty) {
-                  return Container(
-                    color: Colors.black,
-                  );
-                }
+                state.selectedEpisodeUrl.value;
                 return AliPlayerView(
                   onCreated: (viewId) {
                     ///将 渲染 View 设置给播放器
                     state.fAliplayer.setPlayerView(viewId);
                     state.fAliplayer.setUrl(state.selectedEpisodeUrl.value);
                   },
-                  x: 0,
-                  y: 0,
-                  height: 0.3.sh,
-                  width: 1.sw,
                 );
               }),
             ),

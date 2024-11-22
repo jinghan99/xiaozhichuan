@@ -144,7 +144,12 @@ class PlayLogic extends GetxController with GetTickerProviderStateMixin {
     state.tabContents[state.selectedIndex.value] = list;
   }
 
-  void playMedia(String videoUrl) {
+  void playMedia(String videoUrl) async{
+    state.fAliplayer.clearScreen();
+    state.fAliplayer.setUrl(videoUrl);
+    state.fAliplayer.prepare();
+    state.fAliplayer.play();
+
   }
 
   @override
