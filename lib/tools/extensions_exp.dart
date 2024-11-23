@@ -8,7 +8,7 @@ export 'package:flutter_easyloading/flutter_easyloading.dart';
 export 'package:flutter_scaffold/colors/stf_colors.dart';
 export 'package:flutter_scaffold/tools/pattern.dart';
 export 'package:flutter_scaffold/tools/img_utils.dart';
-
+export 'package:flutter_scaffold/tools/utils.dart';
 
 /// 添加单击事件的扩展
 extension WidgetTapX on Widget {

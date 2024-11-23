@@ -159,7 +159,10 @@ class HotPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                )),
+                ).onTap((){
+                  logic.toPlay(item);
+                }),
+            ),
           ],
         ),
       ).onTap((){

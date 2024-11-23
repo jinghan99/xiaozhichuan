@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_scaffold/pages/hot/play/play_logic.dart';
 import 'package:flutter_scaffold/pages/hot/play/play_state.dart';
 import 'package:flutter_scaffold/tools/extensions_exp.dart';
+import 'package:flutter_scaffold/tools/utils.dart';
 import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 
 class PlayPage extends StatelessWidget {
@@ -9,7 +11,7 @@ class PlayPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PlayLogic logic = Get.put(PlayLogic());
+    final PlayLogic logic = Get.find<PlayLogic>();
     final PlayState state = Get.find<PlayLogic>().state;
     return Scaffold(
       appBar: buildAppBar(state),
@@ -22,24 +24,38 @@ class PlayPage extends StatelessWidget {
               child: Obx(() {
                 state.selectedEpisodeUrl.value;
                 return Stack(
+                  alignment: Alignment.topRight,
+                  fit: StackFit.passthrough,
                   children: [
-                    VlcPlayer(
-                      controller: state.videoPlayerController.value,
-                      aspectRatio: 16 / 9,
-                      placeholder: const Center(child: CupertinoActivityIndicator()),
+                    Container(
+                      color: Colors.black,
+                      child: Obx((){
+                        return VlcPlayer(
+                          controller: state.videoPlayerController.value,
+                          aspectRatio: 16 / 9,
+                          placeholder: const Center(child: CupertinoActivityIndicator()),
+                        );
+                      }),
                     ),
-                    // 上层：遮罩层
-                    Positioned.fill(
-                      child: Container(
-                        color: Colors.black.withOpacity(0.3), // 遮罩层，带透明效果
+                    Positioned(
+                      top: 20, // 距离顶部一定距离
+                      right: 10, // 右侧距离
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.fullscreen,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                            logic.toggleFullScreen();
+                        },
                       ),
                     ),
                     Positioned(
-                      bottom: 20, // 距离底部一定距离
+                      bottom: 25, // 距离底部一定距离
                       left: 10, // 左侧距离
-                      right: 10, // 右侧距离
+                      right: 20, // 右侧距离
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           // 暂停/播放按钮
                           Obx(() {
@@ -53,57 +69,51 @@ class PlayPage extends StatelessWidget {
                               },
                             );
                           }),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  // 视频进度条
+                                  Obx(() {
+                                    state.progress.value;
+                                    return Slider(
+                                      activeColor: Colors.white,
+                                      inactiveColor: Colors.grey,
+                                      thumbColor: Colors.white,
+                                      min: 0,
+                                      value: state.progress.value,
+                                      max: state.videoPlayerController.value.value.duration.inSeconds.toDouble(),
+                                      onChanged: (value) {
+                                        // 不再在拖动过程中调用 seekTo，只更新进度条
+                                        state.progress.value = value;
+                                      },
+                                      onChangeEnd: (value) {
+                                        // 滑动完成后才调用 seekTo
+                                        logic.seekTo(value);
+                                      },
+                                    );
+                                  }),
+                                ],
+                              ),
+                            ),
+                          ),
+                          // 显示时长
+                          Obx(() {
+                            state.progress.value;
+                            final currentDuration = state.videoPlayerController.value.value.position;
+                            final totalDuration = state.videoPlayerController.value.value.duration;
+                            final currentFormatted = StringUtils.formatDuration(currentDuration);
+                            final totalFormatted = StringUtils.formatDuration(totalDuration);
+                            return Text(
+                              '$currentFormatted / $totalFormatted',
+                              style: w14,
+                            );
+                          }),
                         ],
                       ),
-                    ),
-                    // 进度条和时长
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            // 视频进度条
-                            Obx(() {
-                              state.progress.value;
-                              return Slider(
-                                min: 0,
-                                value: state.progress.value,
-                                max: state.videoPlayerController.value.value.duration.inSeconds.toDouble(),
-                                onChanged: (value) {
-                                  logic.seekTo(value);
-                                },
-                              );
-                            }),
-                            // 显示时长
-                            Obx(() {
-                              state.progress.value;
-                              final currentDuration = state.videoPlayerController.value.value.position;
-                              final totalDuration = state.videoPlayerController.value.value.duration;
-                              final currentFormatted =
-                                  '${currentDuration.inMinutes}:${(currentDuration.inSeconds % 60).toString().padLeft(2, '0')}';
-                              final totalFormatted =
-                                  '${totalDuration.inMinutes}:${(totalDuration.inSeconds % 60).toString().padLeft(2, '0')}';
-                              return Text(
-                                '$currentFormatted / $totalFormatted',
-                                style: TextStyle(color: Colors.white),
-                              );
-                            }),
-                          ],
-                        ),
-                      ),
-                    ),
-                    // 全屏按钮
-                    IconButton(
-                      icon: Icon(
-                        Icons.fullscreen,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {
-                        // 全屏逻辑
-                        // 可以根据需求实现全屏功能
-                      },
                     ),
                   ],
                 );

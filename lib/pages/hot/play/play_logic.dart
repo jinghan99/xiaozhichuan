@@ -1,14 +1,18 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_scaffold/entity/video/select_episode.dart';
 import 'package:flutter_scaffold/entity/video/vodVideo.dart';
 import 'package:flutter_scaffold/http/my_dio.dart';
 import 'package:flutter_scaffold/http/request.dart';
 import 'package:flutter_scaffold/pages/hot/play/play_state.dart';
 import 'package:flutter_scaffold/tools/my_constant.dart';
-import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 import 'package:get/get.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
+import 'package:flutter_scaffold/tools/extensions_exp.dart';
+
+import '../full_video/full_screen_view.dart';
 
 class PlayLogic extends GetxController with GetTickerProviderStateMixin {
   final PlayState state = PlayState();
@@ -164,13 +168,19 @@ class PlayLogic extends GetxController with GetTickerProviderStateMixin {
 
   // vlc 操作
   /// 播放/暂停切换
-  void togglePlayPause() {
-    if (state.isPlaying.value) {
+  void togglePlayPause(){
+    state.videoPlayerController.value.isPlaying().then((isPlaying) {
+      if (isPlaying == true) {
+        state.videoPlayerController.value.pause();
+        state.isPlaying.value = false;
+      } else {
+        state.videoPlayerController.value.play();
+        state.isPlaying.value = true;
+      }
+    }).catchError((error) {
       state.videoPlayerController.value.pause();
-    } else {
-      state.videoPlayerController.value.play();
-    }
-    state.isPlaying.toggle();
+      state.isPlaying.value = false;
+    });
   }
 
   /// 跳转到指定进度
@@ -181,14 +191,12 @@ class PlayLogic extends GetxController with GetTickerProviderStateMixin {
 
   /// 全屏切换
   void toggleFullScreen() {
-    if (state.isFullScreen.value) {
-      // 退出全屏
-      Get.back();
-    } else {
-      // // 进入全屏
-      // Get.to(() => FullScreenVideoPlayer());
-    }
-    state.isFullScreen.toggle();
+    // AppUtils.getFullScreen();
+    // // 跳转到全屏页面并使用 then() 监听返回
+    // Get.to(FullScreenPage())?.then((result) {
+    //   // 恢复设置（例如竖屏、显示状态栏等）
+    //   AppUtils.getExitFullScreen();
+    // });
   }
 
   /// 更新进度条
