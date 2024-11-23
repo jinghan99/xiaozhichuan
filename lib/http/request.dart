@@ -7,4 +7,8 @@ const String yingshiRankingU = 'https://biz.quark.cn/api/trending/ranking/getYin
 Future yingshiRanking(data, SCallBack sCallBack) async {
   await MyDio().requestDio('get', yingshiRankingU, data, sCallBack, (error) {});
 }
+//api vod 接口
+Future apiVod(String url,data, SCallBack sCallBack) async {
+  await MyDio().requestDio('get', url, data, sCallBack, (error) {});
+}
 

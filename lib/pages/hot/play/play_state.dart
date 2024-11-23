@@ -1,13 +1,28 @@
-
+import 'package:flutter_aliplayer/flutter_aliplayer.dart';
+import 'package:flutter_aliplayer/flutter_aliplayer_factory.dart';
+import 'package:flutter_scaffold/entity/video/vodVideo.dart';
 import 'package:flutter_scaffold/tools/extensions_exp.dart';
-
+import '../../../entity/video/select_episode.dart';
 import '../../../entity/video/tou_tiao_rank_entity.dart';
 
 class PlayState {
   late Item item;
+  var isLoading = true.obs;
+  var selectedEpisodeUrl = "".obs; //选择的集数url
+  FlutterAliplayer fAliplayer = FlutterAliPlayerFactory.createAliPlayer();
+
+  Rx<TabController?> tabController = Rx<TabController?>(null); // 使用 Rx<TabController?>
+
+  var tabs = <String>[].obs; // 存储Tab的标题
+  var tabContents = <List<SelectEpisodeEntity>?>[].obs; // 用于存储Tab内容，初始时内容为null表示尚未加载
+
+  var selectedIndex = 0.obs; // 当前选中的Tab索引
+
+  var infoVideo = Video().obs;
 
   PlayState() {
-       // 获取传递的参数 food
-     item = Get.arguments as Item;
+    // 获取传递的参数 food
+    item = Get.arguments as Item;
+    logger.d(item);
   }
 }

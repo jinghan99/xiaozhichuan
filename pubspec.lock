@@ -158,6 +158,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_aliplayer:
+    dependency: "direct main"
+    description:
+      name: flutter_aliplayer
+      sha256: "26c09c5aaa849d1666ad5ae15bdd5273a0df64760da64ebd7e141e17d04a5c5c"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "6.15.0"
   flutter_barrage:
     dependency: "direct main"
     description:
@@ -763,5 +771,5 @@ packages:
     source: hosted
     version: "6.5.0"
 sdks:
-  dart: ">=3.5.0 <4.0.0"
+  dart: ">=3.5.0 <=3.5.3"
   flutter: ">=3.24.0"

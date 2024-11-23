@@ -14,7 +14,7 @@ class HandheldBarrageLogic extends GetxController {
 
   @override
   void onClose() {
-    // TODO: implement onClose
+    // TODO: implement onClose
     super.onClose();
   }
 

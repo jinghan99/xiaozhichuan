@@ -1,6 +1,4 @@
-
-
-class AppCategories {
+class AppConstants {
   // 静态资源 Map
   static final Map<String, List<Map<String, dynamic>>> categories = {
     '小工具': [
@@ -16,5 +14,10 @@ class AppCategories {
       {'name': '五子棋', 'route': '/gobang'},
     ],
   };
-}
 
+  // 查询的资源站
+  static final List<String> apiVodUrl = <String>[
+    'https://api.tiankongapi.com/api.php/provide/vod/',
+    'https://api.wujinapi.me/api.php/provide/vod/'
+  ];
+}
