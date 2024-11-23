@@ -1,5 +1,5 @@
+import 'dart:async';
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_scaffold/entity/video/select_episode.dart';
 import 'package:flutter_scaffold/entity/video/vodVideo.dart';
@@ -7,14 +7,17 @@ import 'package:flutter_scaffold/http/my_dio.dart';
 import 'package:flutter_scaffold/http/request.dart';
 import 'package:flutter_scaffold/pages/hot/play/play_state.dart';
 import 'package:flutter_scaffold/tools/my_constant.dart';
+import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 import 'package:get/get.dart';
 
 class PlayLogic extends GetxController with GetTickerProviderStateMixin {
   final PlayState state = PlayState();
 
+  late Timer _timer;
+
   @override
-  void onReady() {
-    super.onReady();
+  void onInit() {
+    super.onInit();
     initApi();
   }
 
@@ -28,7 +31,8 @@ class PlayLogic extends GetxController with GetTickerProviderStateMixin {
     try {
       for (int i = 1; i < AppConstants.apiVodUrl.length; i++) {
         String url = AppConstants.apiVodUrl[i];
-        apiVod(url,
+        apiVod(
+          url,
           {
             'wd': vodName,
             'ac': 'detail',
@@ -36,7 +40,7 @@ class PlayLogic extends GetxController with GetTickerProviderStateMixin {
           },
           (response, hasError) {
             try {
-              logger.i(response);
+              logger.i('${url} ${response}');
               // 如果 response.data 是字符串，则需要进行 JSON 解析
               // 检测 response.data 是否为字符串类型
               var jsonData;
@@ -73,7 +77,6 @@ class PlayLogic extends GetxController with GetTickerProviderStateMixin {
     }
   }
 
-
 // 初始化集数
   void initEpisode(Video info) {
     List<String> froms = info.vodPlayFrom?.split("\$\$\$") as List<String>;
@@ -95,6 +98,7 @@ class PlayLogic extends GetxController with GetTickerProviderStateMixin {
           var url = play[1];
           if (state.selectedEpisodeUrl.value == "") {
             state.selectedEpisodeUrl.value = url;
+            playMedia(url);
           }
           list.add(SelectEpisodeEntity(name: play[0], url: url));
         }
@@ -102,7 +106,6 @@ class PlayLogic extends GetxController with GetTickerProviderStateMixin {
       }
     }
   }
-
 
   // 添加 tab
   void addTab(String tabName, List<SelectEpisodeEntity> contents) {
@@ -133,6 +136,7 @@ class PlayLogic extends GetxController with GetTickerProviderStateMixin {
       }
     });
   }
+
   void onTabChanged(int index) {
     state.selectedIndex.value = index;
   }
@@ -144,17 +148,68 @@ class PlayLogic extends GetxController with GetTickerProviderStateMixin {
     state.tabContents[state.selectedIndex.value] = list;
   }
 
-  void playMedia(String videoUrl) async{
-    state.fAliplayer.clearScreen();
-    state.fAliplayer.setUrl(videoUrl);
-    state.fAliplayer.prepare();
-    state.fAliplayer.play();
+  void playMedia(String videoUrl) async {
+    state.selectedEpisodeUrl.value = videoUrl;
+    // 1. 停止当前视频播放
+    state.videoPlayerController.value.stop();
+    // 2. 设置新的播放地址
+    await state.videoPlayerController.value.setMediaFromNetwork(videoUrl);
+    // 3. 准备播放（如果需要）
+    await state.videoPlayerController.value.play();
+    // 启动定时器监听播放进度
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      _updateProgress();
+    });
+  }
 
+  // vlc 操作
+  /// 播放/暂停切换
+  void togglePlayPause() {
+    if (state.isPlaying.value) {
+      state.videoPlayerController.value.pause();
+    } else {
+      state.videoPlayerController.value.play();
+    }
+    state.isPlaying.toggle();
+  }
+
+  /// 跳转到指定进度
+  Future<void> seekTo(double progress) async {
+    final position = Duration(seconds: progress.toInt());
+    state.videoPlayerController.value.seekTo(position);
+  }
+
+  /// 全屏切换
+  void toggleFullScreen() {
+    if (state.isFullScreen.value) {
+      // 退出全屏
+      Get.back();
+    } else {
+      // // 进入全屏
+      // Get.to(() => FullScreenVideoPlayer());
+    }
+    state.isFullScreen.toggle();
+  }
+
+  /// 更新进度条
+  void _updateProgress() async {
+    // 获取当前播放位置
+    Duration position = await state.videoPlayerController.value.value.position;
+    Duration duration = await state.videoPlayerController.value.value.duration;
+    // 计算进度条的百分比
+    if (duration.inSeconds > 0) {
+      // 更新进度条的值
+      state.progress.value = position.inSeconds.toDouble();
+    }
   }
 
   @override
-  void onClose() {
-    // TODO: implement onClose
+  void onClose() async {
+    if (_timer.isActive) {
+      _timer.cancel();
+    }
+    state.videoPlayerController.value.stopRendererScanning();
+    state.videoPlayerController.value.dispose();
     super.onClose();
   }
 }

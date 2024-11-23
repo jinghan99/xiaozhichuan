@@ -18,6 +18,7 @@ class AppConstants {
   // 查询的资源站
   static final List<String> apiVodUrl = <String>[
     'https://api.tiankongapi.com/api.php/provide/vod/',
-    'https://api.wujinapi.me/api.php/provide/vod/'
+    'https://api.wujinapi.me/api.php/provide/vod/',
+    'http://api.ffzyapi.com/api.php/provide/vod/',
   ];
 }

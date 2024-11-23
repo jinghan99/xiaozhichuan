@@ -1,7 +1,8 @@
-import 'package:flutter_aliplayer/flutter_aliplayer.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_scaffold/pages/hot/play/play_logic.dart';
 import 'package:flutter_scaffold/pages/hot/play/play_state.dart';
 import 'package:flutter_scaffold/tools/extensions_exp.dart';
+import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 
 class PlayPage extends StatelessWidget {
   const PlayPage({super.key});
@@ -20,18 +21,97 @@ class PlayPage extends StatelessWidget {
               aspectRatio: 16 / 9,
               child: Obx(() {
                 state.selectedEpisodeUrl.value;
-                return AliPlayerView(
-                  onCreated: (viewId) {
-                    ///将 渲染 View 设置给播放器
-                    state.fAliplayer.setPlayerView(viewId);
-                    state.fAliplayer.setUrl(state.selectedEpisodeUrl.value);
-                  },
+                return Stack(
+                  children: [
+                    VlcPlayer(
+                      controller: state.videoPlayerController.value,
+                      aspectRatio: 16 / 9,
+                      placeholder: const Center(child: CupertinoActivityIndicator()),
+                    ),
+                    // 上层：遮罩层
+                    Positioned.fill(
+                      child: Container(
+                        color: Colors.black.withOpacity(0.3), // 遮罩层，带透明效果
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 20, // 距离底部一定距离
+                      left: 10, // 左侧距离
+                      right: 10, // 右侧距离
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // 暂停/播放按钮
+                          Obx(() {
+                            return IconButton(
+                              icon: Icon(
+                                state.isPlaying.value ? Icons.pause : Icons.play_arrow,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                logic.togglePlayPause();
+                              },
+                            );
+                          }),
+                        ],
+                      ),
+                    ),
+                    // 进度条和时长
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            // 视频进度条
+                            Obx(() {
+                              state.progress.value;
+                              return Slider(
+                                min: 0,
+                                value: state.progress.value,
+                                max: state.videoPlayerController.value.value.duration.inSeconds.toDouble(),
+                                onChanged: (value) {
+                                  logic.seekTo(value);
+                                },
+                              );
+                            }),
+                            // 显示时长
+                            Obx(() {
+                              state.progress.value;
+                              final currentDuration = state.videoPlayerController.value.value.position;
+                              final totalDuration = state.videoPlayerController.value.value.duration;
+                              final currentFormatted =
+                                  '${currentDuration.inMinutes}:${(currentDuration.inSeconds % 60).toString().padLeft(2, '0')}';
+                              final totalFormatted =
+                                  '${totalDuration.inMinutes}:${(totalDuration.inSeconds % 60).toString().padLeft(2, '0')}';
+                              return Text(
+                                '$currentFormatted / $totalFormatted',
+                                style: TextStyle(color: Colors.white),
+                              );
+                            }),
+                          ],
+                        ),
+                      ),
+                    ),
+                    // 全屏按钮
+                    IconButton(
+                      icon: Icon(
+                        Icons.fullscreen,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {
+                        // 全屏逻辑
+                        // 可以根据需求实现全屏功能
+                      },
+                    ),
+                  ],
                 );
               }),
             ),
             Container(
               padding: const EdgeInsets.only(left: 15, top: 15),
-              width: context.width,
+              width: 1.sw,
               child: title(state),
             ),
             anthologyPlay(state, logic),
@@ -174,9 +254,7 @@ class PlayPage extends StatelessWidget {
                       child: SizedBox(
                         width: 12.0, // 设置宽度
                         height: 12.0, // 设置高度
-                        child: CircularProgressIndicator(
-                          strokeWidth: 1.5, // 设置进度条的粗细
-                        ),
+                        child: CupertinoActivityIndicator(),
                       ),
                     ),
                     SizedBox(
@@ -202,19 +280,19 @@ class PlayPage extends StatelessWidget {
 
   Widget selectEpisode(PlayState state, PlayLogic logic) {
     return Obx(() {
+      if (state.isLoading.value) {
+        return const Center();
+      }
       if (state.tabController.value == null) {
         return const Center(
-          child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.orange), // 设置指示器的颜色
-          ),
+          child: Text("资源数据为空"),
         );
       }
-
       return Expanded(
         // 使用 Expanded 包裹整个 tabbarController 确保其占据剩余空间
         child: Column(
           children: [
-            tabbar(state, logic),
+            tabBar(state, logic),
             Expanded(
               // 使用 Expanded 包裹 TabBarView 以占据剩余空间
               child: TabBarView(
@@ -222,17 +300,17 @@ class PlayPage extends StatelessWidget {
                 children: state.tabContents.map((itemList) {
                   if (itemList == null) {
                     // 加载时显示加载提示
-                    return const Center(child: CircularProgressIndicator());
+                    return const Center(child: CupertinoActivityIndicator());
                   }
                   return GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4, childAspectRatio: 2.2),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4, childAspectRatio: 2.2),
                     itemCount: itemList.length,
                     itemBuilder: (context, index) {
                       var item = itemList[index];
                       return GestureDetector(
                         child: Chip(
                           label: Obx(() {
+                            state.selectedEpisodeUrl.value;
                             return Text(
                               item.name,
                               style: TextStyle(
@@ -264,7 +342,7 @@ class PlayPage extends StatelessWidget {
     });
   }
 
-  Widget tabbar(PlayState state, PlayLogic logic) {
+  Widget tabBar(PlayState state, PlayLogic logic) {
     return SizedBox(
       width: 1.sw,
       child: TabBar(
@@ -273,13 +351,13 @@ class PlayPage extends StatelessWidget {
         tabAlignment: TabAlignment.start,
         isScrollable: true,
         // 使 TabBar 可滚动
-        labelColor: Colors.red,
+        labelColor: c7BBD9C,
         // 选中标签的文字颜色
         // unselectedLabelColor: Colors.black, // 未选中标签的文字颜色
-        indicatorColor: Colors.red,
+        indicatorColor: c7BBD9C,
         // 设置底部滑动条颜色为红色
-        labelStyle: const TextStyle(
-          color: Colors.red, // 选中标签文字颜色
+        labelStyle: TextStyle(
+          color: c7BBD9C, // 选中标签文字颜色
           fontWeight: FontWeight.w900, // 选中标签文字加粗
         ),
         unselectedLabelStyle: const TextStyle(
