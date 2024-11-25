@@ -16,6 +16,7 @@ class PlayState {
   var selectedIndex = 0.obs; // 当前选中的Tab索引
 
   var infoVideo = Video().obs;
+  RxBool isShowTime = true.obs;
 
   // VideoPlayer 播放器
    Rx<VideoPlayerController?> videoPlayerController = Rx<VideoPlayerController?>(null);

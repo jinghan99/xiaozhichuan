@@ -211,6 +211,10 @@ class PlayLogic extends GetxController with GetTickerProviderStateMixin {
       state.progress.value = position.inSeconds.toDouble();
     }
   }
+  // 改变显示时间
+  void toggleShowTime(){
+    state.isShowTime.value = !state.isShowTime.value;
+  }
 
   @override
   void onClose() async {

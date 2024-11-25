@@ -12,9 +12,18 @@ export 'package:flutter_scaffold/tools/utils.dart';
 
 /// 添加单击事件的扩展
 extension WidgetTapX on Widget {
+
   Widget onTap(VoidCallback onTapCallback) {
     return GestureDetector(
       onTap: onTapCallback,
+      child: this,
+    );
+  }
+
+  // 双击事件
+  Widget onDoubleTap(VoidCallback onDoubleTapCallback) {
+    return GestureDetector(
+      onDoubleTap: onDoubleTapCallback,
       child: this,
     );
   }
@@ -29,7 +38,7 @@ AppBar buildAppBar(
     fontSize: 16, // 使用常量字体大小
     fontWeight: FontWeight.bold,
   ), //cE5F2EB
-      Color backColor =const Color(0xFF7BBD9C),
+  Color backColor = const Color(0xFF7BBD9C),
 }) {
   return AppBar(
     leading: Container(
@@ -62,4 +71,3 @@ AppBar buildAppBar(
 hideKeyboard() {
   FocusManager.instance.primaryFocus?.unfocus();
 }
-
