@@ -79,6 +79,9 @@ class HotLogic extends GetxController with GetSingleTickerProviderStateMixin {
       EasyLoading.dismiss();
     });
   }
+  void toSearch() {
+    Get.toNamed(search);
+  }
 
   @override
   void onClose() {

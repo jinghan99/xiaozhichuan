@@ -13,6 +13,14 @@ class StringUtils {
       return '$minutes:${seconds.toString().padLeft(2, '0')}';
     }
   }
+
+  static String truncateText(String text, int maxLength) {
+    // 截取文本并添加省略号
+    if (text.length > maxLength) {
+      return '${text.substring(0, maxLength)}...';
+    }
+    return text;
+  }
 }
 
 

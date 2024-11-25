@@ -27,7 +27,7 @@ class PlayLogic extends GetxController with GetTickerProviderStateMixin {
       logger.e("vodName为空");
     }
     try {
-      for (int i = 1; i < AppConstants.apiVodUrl.length; i++) {
+      for (int i = 0; i < AppConstants.apiVodUrl.length; i++) {
         String url = AppConstants.apiVodUrl[i];
         apiVod(
           url,
@@ -211,7 +211,7 @@ class PlayLogic extends GetxController with GetTickerProviderStateMixin {
       state.progress.value = position.inSeconds.toDouble();
     }
   }
-  // 改变显示时间
+  // 改变
   void toggleShowTime(){
     state.isShowTime.value = !state.isShowTime.value;
   }

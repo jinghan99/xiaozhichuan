@@ -12,7 +12,7 @@ class HotPage extends StatelessWidget {
     final HotLogic logic = Get.put(HotLogic());
     final HotState state = Get.find<HotLogic>().state;
     return Scaffold(
-      appBar: buildAppBar(),
+      appBar: buildAppBar(logic),
       body: Column(
         children: [
           tabBar(state, logic),
@@ -49,7 +49,7 @@ class HotPage extends StatelessWidget {
     );
   }
 
-  AppBar buildAppBar() {
+  AppBar buildAppBar(HotLogic logic) {
     return AppBar(
       backgroundColor: cEAF5EF,
       title: Container(
@@ -74,7 +74,9 @@ class HotPage extends StatelessWidget {
           child: IconButton(
             icon: Icon(Icons.search),
             color: Colors.black,
-            onPressed: () {},
+            onPressed: () {
+              logic.toSearch();
+            },
           ),
         ),
       ],
