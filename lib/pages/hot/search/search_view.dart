@@ -2,6 +2,8 @@ import 'package:flutter_scaffold/entity/video/vodVideo.dart';
 import 'package:flutter_scaffold/pages/hot/search/search_logic.dart';
 import 'package:flutter_scaffold/pages/hot/search/search_state.dart';
 import 'package:flutter_scaffold/tools/extensions_exp.dart';
+import 'package:flutter_scaffold/tools/storage_tool.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({super.key});
@@ -12,15 +14,27 @@ class SearchPage extends StatelessWidget {
     final SearchState state = Get.find<SearchLogic>().state;
     return Scaffold(
       appBar: buildAppBar(state, logic),
-      body: Container(
-        padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+      body: SmartRefresher(
+        controller: state.controller,
+        onLoading: logic.onLoading,
+        onRefresh: logic.onRefresh,
+        enablePullUp: true,
         child: Obx(() {
-          return ListView.builder(
-            itemCount: state.searchResultList.value.length,
-            itemBuilder: (context, index) {
-              Video video = state.searchResultList.value[index];
-              return _buildItem(video, logic);
-            },
+          if (state.isLoading.value) {
+            return Center(child: CircularProgressIndicator(color: c7BBD9C,));
+          }
+          if (state.searchResultList.value.isEmpty && !state.isLoading.value) {
+            return searchHistory(state, logic);
+          }
+          return Container(
+            margin: const EdgeInsets.only(top: 10),
+            child: ListView.builder(
+              itemCount: state.searchResultList.value.length,
+              itemBuilder: (context, index) {
+                Video video = state.searchResultList.value[index];
+                return _buildItem(video, logic);
+              },
+            ),
           );
         }),
       ),
@@ -50,7 +64,8 @@ class SearchPage extends StatelessWidget {
                     children: [
                       Text(
                         StringUtils.truncateText(item.vodName!, 10),
-                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color.fromRGBO(25, 35, 56, 1.000)),
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold, color: Color.fromRGBO(25, 35, 56, 1.000)),
                         maxLines: 1, // 限制为单行
                       ),
                     ],
@@ -139,8 +154,8 @@ class SearchPage extends StatelessWidget {
                 children: state.searchList.map((item) {
                   return GestureDetector(
                     onTap: () {
-                      // 传递参数到路由
-                      Get.toNamed('/search', arguments: {'searchText': item});
+                      hideKeyboard();
+                      logic.searchName(item);
                     },
                     child: Chip(
                       label: Text(
@@ -214,6 +229,7 @@ class SearchPage extends StatelessWidget {
         children: [
           Expanded(
             child: TextField(
+              autofocus: true,
               controller: state.searchController,
               cursorColor: Colors.grey,
               textInputAction: TextInputAction.search,
@@ -230,7 +246,7 @@ class SearchPage extends StatelessWidget {
               style: TextStyle(color: c9C, fontSize: 12.sp),
               onSubmitted: (value) {
                 hideKeyboard();
-                logic.searchName();
+                logic.searchName(value);
               },
             ).marginSymmetric(horizontal: 5.w),
           ),
@@ -238,7 +254,7 @@ class SearchPage extends StatelessWidget {
           TextButton(
             onPressed: () {
               hideKeyboard();
-              logic.searchName();
+              logic.searchName(state.searchController?.value.text);
             },
             child: const Text(
               '搜索',

@@ -56,12 +56,22 @@ class SearchLogic extends GetxController {
     spUtils.setStorage("searchList", state.searchList);
   }
 
-  void searchName() {
-    String? inputValue = state.searchController?.value.text;
-    if(inputValue == null || inputValue.isEmpty){
+  void onLoading() {
+    searchName(state.searchController.value.text);
+  }
+
+  void onRefresh() {
+    searchName(state.searchController.value.text);
+  }
+
+  void searchName(String? vodName) async {
+    if (vodName == null || vodName.isEmpty) {
       return;
     }
-    String vodName = inputValue;
+    state.isLoading.value = true;
+    state.searchController.text = vodName;
+    addSearch(vodName);
+    state.searchResultList.value.clear();
     try {
       for (int i = 0; i < AppConstants.apiVodUrl.length; i++) {
         String url = AppConstants.apiVodUrl[i];
@@ -112,6 +122,7 @@ class SearchLogic extends GetxController {
     }
     final entries = state.searchResultMap.value.entries.toList();
     state.searchResultList.value = entries.map((entry) => entry.value).toList();
+    state.isLoading.value = false;
     logger.i("搜索记录 ${state.searchResultList.value.length}");
   }
 
@@ -132,7 +143,7 @@ class SearchLogic extends GetxController {
 
   @override
   void onClose() {
-    // TODO: implement onClose
+    state.searchController.dispose();
     super.onClose();
   }
 }
