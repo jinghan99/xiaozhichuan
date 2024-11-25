@@ -1,10 +1,8 @@
-import 'package:flutter_aliplayer/flutter_aliplayer.dart';
-import 'package:flutter_aliplayer/flutter_aliplayer_factory.dart';
+import 'package:flutter_scaffold/entity/video/select_episode.dart';
+import 'package:flutter_scaffold/entity/video/tou_tiao_rank_entity.dart';
 import 'package:flutter_scaffold/entity/video/vodVideo.dart';
 import 'package:flutter_scaffold/tools/extensions_exp.dart';
-import 'package:flutter_vlc_player/flutter_vlc_player.dart';
-import '../../../entity/video/select_episode.dart';
-import '../../../entity/video/tou_tiao_rank_entity.dart';
+import 'package:video_player/video_player.dart';
 
 class PlayState {
   late Item item;
@@ -19,22 +17,16 @@ class PlayState {
 
   var infoVideo = Video().obs;
 
-  // vlc 播放器
-  late Rx<VlcPlayerController> videoPlayerController;
+  // VideoPlayer 播放器
+   Rx<VideoPlayerController?> videoPlayerController = Rx<VideoPlayerController?>(null);
 
-  final RxBool isPlaying = true.obs;
+  final RxBool isPlaying = false.obs;
   final RxBool isFullScreen = false.obs;
   final RxDouble progress = 0.0.obs;
 
   PlayState() {
     // 获取传递的参数 food
     item = Get.arguments as Item;
-    videoPlayerController = Rx<VlcPlayerController>(VlcPlayerController.network(
-      '',
-      hwAcc: HwAcc.auto,
-      autoPlay: true, // 自动播放
-      options: VlcPlayerOptions(),
-    ));
     logger.d(item);
   }
 }

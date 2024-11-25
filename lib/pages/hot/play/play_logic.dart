@@ -1,23 +1,17 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_scaffold/entity/video/select_episode.dart';
 import 'package:flutter_scaffold/entity/video/vodVideo.dart';
-import 'package:flutter_scaffold/http/my_dio.dart';
 import 'package:flutter_scaffold/http/request.dart';
 import 'package:flutter_scaffold/pages/hot/play/play_state.dart';
 import 'package:flutter_scaffold/tools/my_constant.dart';
-import 'package:get/get.dart';
-import 'package:wakelock_plus/wakelock_plus.dart';
 import 'package:flutter_scaffold/tools/extensions_exp.dart';
-
-import '../full_video/full_screen_view.dart';
+import 'package:video_player/video_player.dart';
 
 class PlayLogic extends GetxController with GetTickerProviderStateMixin {
   final PlayState state = PlayState();
 
-  late Timer _timer;
+  Timer? _timer;
 
   @override
   void onInit() {
@@ -153,57 +147,64 @@ class PlayLogic extends GetxController with GetTickerProviderStateMixin {
   }
 
   void playMedia(String videoUrl) async {
+    state.isPlaying.value = false;
     state.selectedEpisodeUrl.value = videoUrl;
-    // 1. 停止当前视频播放
-    state.videoPlayerController.value.stop();
+    // 1. 停止当前视频播放并释放资源
+    await state.videoPlayerController.value?.pause();
+    await state.videoPlayerController.value?.dispose();
     // 2. 设置新的播放地址
-    await state.videoPlayerController.value.setMediaFromNetwork(videoUrl);
-    // 3. 准备播放（如果需要）
-    await state.videoPlayerController.value.play();
-    // 启动定时器监听播放进度
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    state.videoPlayerController.value = VideoPlayerController.networkUrl(Uri.parse(videoUrl));
+    state.progress.value = 0.0;
+    // 3. 初始化并准备播放
+    await state.videoPlayerController.value?.initialize();
+    await state.videoPlayerController.value?.play();
+    state.isPlaying.value = true;
+    // 如果已经有一个定时器在运行，取消它
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       _updateProgress();
     });
   }
 
-  // vlc 操作
   /// 播放/暂停切换
-  void togglePlayPause(){
-    state.videoPlayerController.value.isPlaying().then((isPlaying) {
-      if (isPlaying == true) {
-        state.videoPlayerController.value.pause();
-        state.isPlaying.value = false;
-      } else {
-        state.videoPlayerController.value.play();
-        state.isPlaying.value = true;
-      }
-    }).catchError((error) {
-      state.videoPlayerController.value.pause();
-      state.isPlaying.value = false;
-    });
+  void togglePlayPause() {
+    final controller = state.videoPlayerController.value;
+    // 检查控制器是否为 null 或未初始化
+    if (controller == null || !controller.value.isInitialized) {
+      print("视频尚未初始化");
+      return;
+    }
+    // 切换播放状态
+    if (controller.value.isPlaying) {
+      controller.pause();
+    } else {
+      controller.play();
+    }
+    // 使用 Rx 自动更新播放状态
+    state.isPlaying.value = controller.value.isPlaying;
   }
 
   /// 跳转到指定进度
   Future<void> seekTo(double progress) async {
     final position = Duration(seconds: progress.toInt());
-    state.videoPlayerController.value.seekTo(position);
+    state.videoPlayerController.value?.seekTo(position);
   }
 
   /// 全屏切换
   void toggleFullScreen() {
-    // AppUtils.getFullScreen();
-    // // 跳转到全屏页面并使用 then() 监听返回
-    // Get.to(FullScreenPage())?.then((result) {
-    //   // 恢复设置（例如竖屏、显示状态栏等）
-    //   AppUtils.getExitFullScreen();
-    // });
+    if (state.isFullScreen.value) {
+      AppUtils.getExitFullScreen();
+    } else {
+      AppUtils.getFullScreen();
+    }
+    state.isFullScreen.value = !state.isFullScreen.value;
   }
 
   /// 更新进度条
   void _updateProgress() async {
     // 获取当前播放位置
-    Duration position = await state.videoPlayerController.value.value.position;
-    Duration duration = await state.videoPlayerController.value.value.duration;
+    Duration position = await state.videoPlayerController.value!.value.position;
+    Duration duration = await state.videoPlayerController.value!.value.duration;
     // 计算进度条的百分比
     if (duration.inSeconds > 0) {
       // 更新进度条的值
@@ -213,11 +214,16 @@ class PlayLogic extends GetxController with GetTickerProviderStateMixin {
 
   @override
   void onClose() async {
-    if (_timer.isActive) {
-      _timer.cancel();
+    if (_timer != null && _timer!.isActive) {
+      _timer?.cancel();
     }
-    state.videoPlayerController.value.stopRendererScanning();
-    state.videoPlayerController.value.dispose();
+    if (state.isFullScreen.value) {
+      AppUtils.getExitFullScreen();
+    }
+    if (state.videoPlayerController.value != null) {
+      await state.videoPlayerController.value?.pause(); // 停止播放
+      await state.videoPlayerController.value?.dispose(); // 释放资源
+    }
     super.onClose();
   }
 }

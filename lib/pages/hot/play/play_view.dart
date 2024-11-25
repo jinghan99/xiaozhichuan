@@ -2,139 +2,204 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_scaffold/pages/hot/play/play_logic.dart';
 import 'package:flutter_scaffold/pages/hot/play/play_state.dart';
 import 'package:flutter_scaffold/tools/extensions_exp.dart';
-import 'package:flutter_vlc_player/flutter_vlc_player.dart';
+import 'package:video_player/video_player.dart';
 
 class PlayPage extends StatelessWidget {
-
   const PlayPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final PlayLogic logic = Get.find<PlayLogic>();
     final PlayState state = Get.find<PlayLogic>().state;
-    return Scaffold(
-      appBar: buildAppBar(state),
-      body: Obx(() {
-        state.selectedEpisodeUrl.value;
-        return Column(
-          children: [
-            AspectRatio(
-              aspectRatio: 16 / 9,
-              child: Obx(() {
-                state.selectedEpisodeUrl.value;
-                return Stack(
-                  alignment: Alignment.topRight,
-                  fit: StackFit.passthrough,
-                  children: [
-                    Container(
-                      color: Colors.black,
-                      child: Obx((){
-                        return VlcPlayer(
-                          controller: state.videoPlayerController.value,
-                          aspectRatio: 16 / 9,
-                          placeholder: const Center(child: CupertinoActivityIndicator()),
-                        );
-                      }),
-                    ),
-                    Positioned(
-                      top: 20, // 距离顶部一定距离
-                      right: 10, // 右侧距离
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.fullscreen,
-                          color: Colors.white,
-                        ),
-                        onPressed: () {
-                            logic.toggleFullScreen();
-                        },
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 25, // 距离底部一定距离
-                      left: 10, // 左侧距离
-                      right: 20, // 右侧距离
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          // 暂停/播放按钮
-                          Obx(() {
-                            return IconButton(
-                              icon: Icon(
-                                state.isPlaying.value ? Icons.pause : Icons.play_arrow,
-                                color: Colors.white,
-                              ),
-                              onPressed: () {
-                                logic.togglePlayPause();
-                              },
-                            );
-                          }),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  // 视频进度条
-                                  Obx(() {
-                                    state.progress.value;
-                                    return Slider(
-                                      activeColor: Colors.white,
-                                      inactiveColor: Colors.grey,
-                                      thumbColor: Colors.white,
-                                      min: 0,
-                                      value: state.progress.value,
-                                      max: state.videoPlayerController.value.value.duration.inSeconds.toDouble(),
-                                      onChanged: (value) {
-                                        // 不再在拖动过程中调用 seekTo，只更新进度条
-                                        state.progress.value = value;
-                                      },
-                                      onChangeEnd: (value) {
-                                        // 滑动完成后才调用 seekTo
-                                        logic.seekTo(value);
-                                      },
-                                    );
-                                  }),
-                                ],
-                              ),
-                            ),
-                          ),
-                          // 显示时长
-                          Obx(() {
-                            state.progress.value;
-                            final currentDuration = state.videoPlayerController.value.value.position;
-                            final totalDuration = state.videoPlayerController.value.value.duration;
-                            final currentFormatted = StringUtils.formatDuration(currentDuration);
-                            final totalFormatted = StringUtils.formatDuration(totalDuration);
-                            return Text(
-                              '$currentFormatted / $totalFormatted',
-                              style: w14,
-                            );
-                          }),
-                        ],
-                      ),
-                    ),
-                  ],
-                );
-              }),
-            ),
-            Container(
-              padding: const EdgeInsets.only(left: 15, top: 15),
-              width: 1.sw,
-              child: title(state),
-            ),
-            anthologyPlay(state, logic),
-            selectEpisode(state, logic),
-            const SizedBox(
-              height: 10,
-            )
-          ],
+    return Obx(() {
+      return Scaffold(
+        appBar: buildAppBar(state),
+        body: Obx(() {
+          state.isFullScreen.value;
+          state.progress.value;
+          if (state.isFullScreen.value) {//全屏
+            return LayoutBuilder(builder: (context, constraints) {
+              final width = constraints.maxWidth; // 动态获取屏幕宽度
+              final height = constraints.maxHeight; // 动态获取屏幕高度
+              return Container(
+                color: Colors.black,
+                width: width,
+                height: height,
+                child: buildAspectRatio(state, logic),
+              );
+            });
+          }
+          return Column(
+            children: [
+              Container(
+                color: Colors.black,
+                child: AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: buildAspectRatio(state, logic),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.only(left: 15, top: 15),
+                width: 1.sw,
+                child: title(state),
+              ),
+              anthologyPlay(state, logic),
+              selectEpisode(state, logic),
+              const SizedBox(
+                height: 10,
+              )
+            ],
+          );
+        }),
+      );
+    });
+  }
+
+  // 构建播放画面
+  Widget buildAspectRatio(PlayState state, PlayLogic logic) {
+    return Obx(() {
+      if (state.videoPlayerController.value == null && !state.isLoading.value) {
+        return Container(
+          color: Colors.black,
         );
-      }),
-    );
+      }
+      if (state.videoPlayerController.value == null && state.isLoading.value) {
+        return Container(
+          color: Colors.black,
+          child: const Center(
+              child: CupertinoActivityIndicator(
+            color: Colors.white,
+          )),
+        );
+      }
+      return Stack(
+        alignment: Alignment.center,
+        children: [
+          Container(
+            color: Colors.black,
+            child: Obx(
+              () {
+                if (state.videoPlayerController.value != null && state.videoPlayerController.value!.value.isInitialized) {
+                  return AspectRatio(
+                    // 保持视频的宽高比
+                    aspectRatio: state.videoPlayerController.value!.value.aspectRatio,
+                    child: VideoPlayer(state.videoPlayerController.value!),
+                  );
+                }
+                return const Center(
+                    child: CupertinoActivityIndicator(
+                  color: Colors.white,
+                ));
+              },
+            ),
+          ),
+          Visibility(
+              visible: state.isFullScreen.value,
+              child: Positioned(
+                top: 20, // 距离顶部一定距离
+                left: 10, // 右侧距离
+                child: IconButton(
+                  icon: Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    logic.toggleFullScreen();
+                  },
+                ),
+              )),
+          Visibility(
+              visible: !state.isFullScreen.value,
+              child: Positioned(
+                top: 20, // 距离顶部一定距离
+                right: 10, // 右侧距离
+                child: IconButton(
+                  icon: Icon(
+                    Icons.fullscreen,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    logic.toggleFullScreen();
+                  },
+                ),
+              )),
+          Positioned(
+            bottom: 0, // 距离顶部一定距离
+            left: 15, // 左侧距离
+            right: 15, // 右侧距离
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                // 暂停/播放按钮
+                Obx(() {
+                  return IconButton(
+                    icon: Icon(
+                      state.isPlaying.value ? Icons.pause : Icons.play_arrow,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      logic.togglePlayPause();
+                    },
+                  );
+                }),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        // 视频进度条
+                        Obx(() {
+                          state.progress.value;
+                          return Slider(
+                            activeColor: Colors.white,
+                            inactiveColor: Colors.grey,
+                            thumbColor: Colors.white,
+                            min: 0,
+                            value: state.progress.value,
+                            max: state.videoPlayerController.value!.value.duration.inSeconds.toDouble(),
+                            onChanged: (value) {
+                              // 不再在拖动过程中调用 seekTo，只更新进度条
+                              state.progress.value = value;
+                            },
+                            onChangeEnd: (value) {
+                              // 滑动完成后才调用 seekTo
+                              logic.seekTo(value);
+                            },
+                          );
+                        }),
+                      ],
+                    ),
+                  ),
+                ),
+                // 显示时长
+                Obx(() {
+                  state.progress.value;
+                  final currentDuration = state.videoPlayerController.value!.value.position;
+                  final totalDuration = state.videoPlayerController.value!.value.duration;
+                  final currentFormatted = StringUtils.formatDuration(currentDuration);
+                  final totalFormatted = StringUtils.formatDuration(totalDuration);
+                  return Text(
+                    '$currentFormatted / $totalFormatted',
+                    style: w14,
+                  );
+                }),
+              ],
+            ),
+          ),
+        ],
+      );
+    });
   }
 
   AppBar buildAppBar(PlayState state) {
+    if (state.isFullScreen.value) {
+      return AppBar(
+        backgroundColor: cEAF5EF,
+        toolbarHeight: 0,
+      );
+    }
     return AppBar(
       backgroundColor: cEAF5EF,
       title: Container(
@@ -324,7 +389,7 @@ class PlayPage extends StatelessWidget {
                               item.name,
                               style: TextStyle(
                                 fontSize: 10, // 设置文字大小
-                                color: item.url == state.selectedEpisodeUrl.value ? Colors.red : Colors.black, // 文字颜色
+                                color: item.url == state.selectedEpisodeUrl.value ?  Colors.green : Colors.black, // 文字颜色
                               ),
                             );
                           }),
