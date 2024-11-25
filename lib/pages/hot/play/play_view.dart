@@ -257,7 +257,7 @@ class PlayPage extends StatelessWidget {
                   ),
                   side: const BorderSide(
                     color: Colors.grey, // 边框颜色
-                    width: 0.5, // 边框宽度
+                    width: 0.1, // 边框宽度
                   ),
                 ),
               if ((state.item.area ?? "").isNotEmpty)
@@ -268,7 +268,7 @@ class PlayPage extends StatelessWidget {
                   ),
                   side: const BorderSide(
                     color: Colors.grey, // 边框颜色
-                    width: 0.5, // 边框宽度
+                    width: 0.1, // 边框宽度
                   ),
                 ),
               if ((state.item.channel ?? "").isNotEmpty)
@@ -279,7 +279,7 @@ class PlayPage extends StatelessWidget {
                   ),
                   side: const BorderSide(
                     color: Colors.grey, // 边框颜色
-                    width: 0.5, // 边框宽度
+                    width: 0.1, // 边框宽度
                   ),
                 ),
               if ((state.item.category ?? "").isNotEmpty)
@@ -290,12 +290,22 @@ class PlayPage extends StatelessWidget {
                   ),
                   side: const BorderSide(
                     color: Colors.grey, // 边框颜色
-                    width: 0.5, // 边框宽度
+                    width: 0.1, // 边框宽度
                   ),
                 ),
             ],
           ),
+        ),
+        SizedBox(
+          width: 1.sw,
+          child:Text(
+            "${ state.item.desc ?? ""}",
+            style: b12,
+            maxLines: 5,
+            overflow: TextOverflow.ellipsis, // 这里设置文本溢出的处理方式
+          ).paddingOnly(top: 8),
         )
+
       ],
     );
   }
