@@ -13,6 +13,7 @@ class SearchPage extends StatelessWidget {
     final SearchLogic logic = Get.put(SearchLogic());
     final SearchState state = Get.find<SearchLogic>().state;
     return Scaffold(
+      backgroundColor: cF5,
       appBar: buildAppBar(state, logic),
       body: SmartRefresher(
         controller: state.controller,
@@ -26,15 +27,12 @@ class SearchPage extends StatelessWidget {
           if (state.searchResultList.value.isEmpty && !state.isLoading.value) {
             return searchHistory(state, logic);
           }
-          return Container(
-            margin: const EdgeInsets.only(top: 10),
-            child: ListView.builder(
-              itemCount: state.searchResultList.value.length,
-              itemBuilder: (context, index) {
-                Video video = state.searchResultList.value[index];
-                return _buildItem(video, logic);
-              },
-            ),
+          return ListView.builder(
+            itemCount: state.searchResultList.value.length,
+            itemBuilder: (context, index) {
+              Video video = state.searchResultList.value[index];
+              return _buildItem(video, logic);
+            },
           );
         }),
       ),
@@ -43,7 +41,9 @@ class SearchPage extends StatelessWidget {
 
   Widget _buildItem(Video item, SearchLogic logic) {
     return Container(
-      padding: const EdgeInsets.all(5),
+      color: Colors.white,
+      margin: const EdgeInsets.only(bottom: 5),
+      padding: const EdgeInsets.only(left: 5),
       height: 140,
       child: Row(
         children: [
@@ -54,6 +54,7 @@ class SearchPage extends StatelessWidget {
           Expanded(
             flex: 8,
             child: Container(
+              height: 140,
               padding: const EdgeInsets.fromLTRB(0, 5, 0, 14),
               margin: const EdgeInsets.only(left: 8),
               child: Column(
@@ -243,7 +244,7 @@ class SearchPage extends StatelessWidget {
                   color: Colors.grey,
                 ),
               ),
-              style: TextStyle(color: c9C, fontSize: 12.sp),
+              style: TextStyle(color: c9C, fontSize: 15.sp),
               onSubmitted: (value) {
                 hideKeyboard();
                 logic.searchName(value);

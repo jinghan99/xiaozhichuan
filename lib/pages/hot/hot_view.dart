@@ -114,6 +114,7 @@ class HotPage extends StatelessWidget {
 
   Widget _buildItem(Item item, HotLogic logic) {
     return Container(
+      color: Colors.white,
        padding: const EdgeInsets.all(5),
         height: 140,
         child: Row(
