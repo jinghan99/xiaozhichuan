@@ -100,3 +100,10 @@ flutter pub add shared_preferences # 本地存储
 
 
 The application icon has a white background with a boat on the top half and a light ocean color with water waves on the bottom half. The boat is a simple and easily recognizable paper boat outline with subtle fold lines to show details. The boat is a light green color #7BBD9CFF. The boat includes minimalist gadget icons, such as clock, code scanning, tools, small games, etc. The icons are evenly distributed in the boat. The paper boat floats in the stream and river, carrying the gadgets forward, leaving traces of water waves.
+
+
+打包正式包
+flutter build apk --release
+
+运行正式包
+flutter run --release
