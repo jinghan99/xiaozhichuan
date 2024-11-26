@@ -127,7 +127,7 @@ class SearchLogic extends GetxController {
   }
 
   void toPlay(Video video) {
-    logger.i("toPlay $video");
+    logger.i("toPlay ${video.toJson()}");
     Item item = Item(
       title: video.vodName,
       actors: video.vodActor,
@@ -136,6 +136,7 @@ class SearchLogic extends GetxController {
       year: video.vodYear,
       pubDate: video.vodPubdate,
       src: video.vodPic,
+      desc: video.vodBlurb,
     );
     // 组装视频页参数
     Get.toNamed(play, arguments: item);

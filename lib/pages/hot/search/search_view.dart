@@ -71,12 +71,12 @@ class SearchPage extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    "${item.vodYear!.split(' ')[0]} / ${item.vodArea!} / ${item.vodTag!}",
+                    "${item.vodYear!.split(' ')[0]} / ${item.vodArea!} / ${item.vodClass!}",
                     style: const TextStyle(color: Color.fromRGBO(92, 102, 120, 1), fontSize: 14),
                   ).marginSymmetric(vertical: 8),
                   const SizedBox(height: 7),
                   Text(
-                    item.vodActor!,
+                    item.vodRemarks!,
                     style: const TextStyle(color: Color.fromRGBO(45, 56, 78, 1), fontSize: 12),
                     overflow: TextOverflow.ellipsis, // 当文本溢出时显示省略号
                     maxLines: 1, // 限制为单行
@@ -105,7 +105,7 @@ class SearchPage extends StatelessWidget {
             children: [
               const Icon(Icons.history),
               const SizedBox(width: 8),
-              const Text("搜索历史", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+              const Text("搜索历史", style: TextStyle(fontSize: 16)),
               const Spacer(),
               TextButton(
                 onPressed: () {
@@ -164,8 +164,8 @@ class SearchPage extends StatelessWidget {
                       ),
                       backgroundColor: Colors.white, // 设置 Chip 的背景颜色
                       side: BorderSide(
-                        color: Colors.red.withOpacity(0.2), // 淡化边框颜色
-                        width: 1.0, // 边框宽度
+                        color: Colors.green.withOpacity(0.2), // 淡化边框颜色
+                        width: 0.4, // 边框宽度
                       ),
                       onDeleted: state.isEditingSearch.value
                           ? () {

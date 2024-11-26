@@ -440,21 +440,15 @@ class PlayPage extends StatelessWidget {
         controller: state.tabController.value,
         dividerHeight: 0,
         tabAlignment: TabAlignment.start,
-        isScrollable: true,
         // 使 TabBar 可滚动
+        isScrollable: true,
         labelColor: c7BBD9C,
         // 选中标签的文字颜色
         // unselectedLabelColor: Colors.black, // 未选中标签的文字颜色
         indicatorColor: c7BBD9C,
         // 设置底部滑动条颜色为红色
-        labelStyle: TextStyle(
-          color: c7BBD9C, // 选中标签文字颜色
-          fontWeight: FontWeight.w900, // 选中标签文字加粗
-        ),
-        unselectedLabelStyle: const TextStyle(
-          color: Colors.black, // 未选中标签文字颜色
-          fontWeight: FontWeight.normal, // 未选中标签文字正常
-        ),
+        labelStyle: gr14,
+        unselectedLabelStyle: b14,
         tabs: state.tabs.map((tab) => Tab(text: tab)).toList(),
         // 根据 tabs 列表生成 Tab 项
         onTap: (index) {

@@ -112,6 +112,7 @@ class PlayLogic extends GetxController with GetTickerProviderStateMixin {
       logger.w("tab 数量不对");
       return;
     }
+    tabName = tabName.replaceAll("m3u8", "源");
     List<String> tabTmp = state.tabs.value;
     tabTmp.add(tabName);
     List<List<SelectEpisodeEntity>?> contentTmp = state.tabContents.value;
